@@ -1,8 +1,9 @@
 class HolidaysController < ApplicationController
+  before_filter :find_holiday, only: [:edit, :show, :update]
 
   # returns yearwise holiday list 
   def index
-    @holidays_by_year = Holiday.find(:all, :conditions => ['year(date) = ?',  Time.now.year])
+    @holidays_by_year = Holiday.yeardate
     if params[:commit] == "set"
       @holidays_by_year = Holiday.find(:all, :conditions => ['year(date) = ?', params[:date][:year]])
     end
@@ -17,7 +18,7 @@ class HolidaysController < ApplicationController
         format.html { redirect_to holidays_index_path(@holiday), notice: 'Holiday is Submitted' }
 
       else
-        format.html { render action: "new" }
+        format.html { render "new" }
       end
     end
   end
@@ -30,14 +31,8 @@ class HolidaysController < ApplicationController
     end
   end
 
-  # edit holiday date or holiday name
-  def edit
-    @holiday = Holiday.find(params[:id])
-  end
-
   # show holiday
   def show
-    @holiday = Holiday.find(params[:id])
     respond_to do |format|
       format.html
     end
@@ -45,13 +40,11 @@ class HolidaysController < ApplicationController
 
   # updates holiday date or holiday name and saves updated holiday
   def update
-    @holiday = Holiday.find(params[:id])
-
     respond_to do |format|
       if @holiday.update_attributes(params[:holiday])
         format.html { redirect_to holiday_path(@holiday), notice: 'Holiday is successfully updated' }
       else
-        format.html { render action: "edit" }
+        format.html { render "edit" }
       end
     end
   end
@@ -62,6 +55,11 @@ class HolidaysController < ApplicationController
     @holiday.destroy
     flash[:notice] = 'Holiday is successfully deleted.'
     redirect_to :action => 'index'
+  end
+
+  protected
+  def find_holiday
+    @holiday = Holiday.find(params[:id])
   end
 
 end

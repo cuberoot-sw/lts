@@ -7,19 +7,28 @@ class UsersController < ApplicationController
     end
   end
 
-  # edit user details
+  def first_step
+    debugger
+  #  permanent_address = params[:permanent_address]
+ #   emergency_phone_number = params[:emergency_phone_number]
+    user = params[:user]
+    search = params[:search]
+    official_email_id = params[:user][:official_email_id]
+    render "first_step"
+ #   render "first_step", :locals => {:offical_email => offical_email_id}
+  end
+ 
+ # edit user details
   def edit
     @user= User.find(params[:id])
   end
 
   # update user details and saves updated details
   def update
-    @setup = Setup.find(:all, :conditions => ['year = ?', "#{Time.now.year}"])
+    @setup = Setup.setupbyyear
     @user = User.find(params[:id])
     if params[:commit] == "Change"
-      @user.manager_id = params[:manager_id]
-      @user.joining_date = params[:joining_date]
-      @user.role = params[:role]
+      @user.updateuserdetails
     end
 
     if @user.update_attributes(params[:user])

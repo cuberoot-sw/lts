@@ -1,4 +1,5 @@
 class LeavesController < ApplicationController
+  before_filter :find_leave, only: [:edit, :update, :show]
 
   # creates new leave and saves it.
   def create
@@ -10,7 +11,7 @@ class LeavesController < ApplicationController
        # LeaveMailer.leave_email(@leave).deliver
         format.html { redirect_to leave_path(@leave), notice: 'Leave is Submitted' }
       else
-        format.html { render action: "new" }
+        format.html { render "new" }
       end
     end
   end
@@ -23,24 +24,14 @@ class LeavesController < ApplicationController
     end
   end
 
-  # edits leave details
-  def edit
-    @leave = Leave.find(params[:id])
-  end
-
   # updates leave details and saves updates leave details
   def update
-    @leave = Leave.find( params[:id])
-
     if params[:commit] == "Approve"
-        @leave.current_status = "Approved"
-        @leave.approved_by = current_user.id
-        @leave.approved_on = Time.now
+        @leave.approved
     end
 
     if params[:commit] == "Reject"
-      @leave.current_status = "Rejected"
-      @leave.approved_by = current_user.id
+      @leave.rejected
       @leave.rejection_reason = params[:rejection_reason]
     end
     
@@ -53,7 +44,7 @@ class LeavesController < ApplicationController
         format.html { redirect_to leave_path(@leave), notice: 'Leave is successfully updated.' }
       else
         debugger
-        format.html { render action: "edit" }
+        format.html { render "edit" }
       end
     end
   end
@@ -104,7 +95,6 @@ class LeavesController < ApplicationController
 
   # displays applied leave
   def show
-    @leave = Leave.find(params[:id])
     respond_to do |format|
       format.html
     end
@@ -129,6 +119,11 @@ class LeavesController < ApplicationController
       session[:current_year] = params[:date][:year]
       redirect_to leaves_url
     end
+  end
+
+  protected
+  def find_leave
+    @leave = Leave.find(params[:id])
   end
 
  end

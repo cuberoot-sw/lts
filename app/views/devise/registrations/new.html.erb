@@ -1,0 +1,687 @@
+<h2>Sign up</h2>
+
+<%= form_for @user do |f| %>
+  <!---  (resource, :as => resource_name, :url => registration_path(resource_name)) -->
+  <!--- /*     */
+    -->
+  <%= devise_error_messages! %>
+  
+  <div id="errorDiv_id"></div>
+  <div><%= f.label :email %>
+    <%= f.email_field :email %></div>
+  <div id="error_email"></div>
+
+
+  <div><%= f.label :password %>
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %></div>
+
+  <div><%= f.label :phone_number %>
+    <%= f.text_field :phone_number %></div>
+   <div id="error_phone_number"> </div>
+
+ <!--- :emergency_phone_number,:emergency_contact_person,:alternate_phone_number,:blood_group,
+  :official_email_id,:alternate_email_id,:date_of_birth,:local_address,:permanent_address
+  -->
+    <div><%= f.label :emergency_phone_number %>
+      <%= f.text_field :emergency_phone_number %></div>
+     <div id="error_emergency_phone_number"></div>
+
+
+     <div><%= f.label :emergency_contact_person %>
+     <%= f.text_field :emergency_contact_person %></div>
+    <div id="error_emergency_contact_person"></div>
+
+
+    <div><%= f.label :alternate_phone_number %>
+      <%= f.text_field :alternate_phone_number %></div>
+    <div id="error_alternate_phone_number"></div>
+
+   <div><%= f.label :official_email_id %>
+     <%= f.text_field :official_email_id %></div>
+   <div id="error_official_email_id"></div>
+
+    <div><%= f.label :alternate_email_id %>
+      <%= f.text_field :alternate_email_id %></div>
+    <div id="error_alternate_email_id"></div>
+
+
+    <div id="dateofbirth_div_id">
+    <%= f.label :date_of_birth,"Date of Birth" %>
+    <%= f.text_field :date_of_birth %>
+  </div>
+
+   <div><%= f.label :blood_group %></div>
+   <%= f.select :blood_group, options_for_post_bloodgroup %>
+
+  <div>
+    <%= f.label :local_address,"Local Address :" %>
+    <%= f.hidden_field :local_address %>
+  </div>
+
+  <div>
+    <label for="localAddressCity">City</label>
+    <input id="user_local_address_city" type="text">
+  </div>
+  <div id="error_local_address_city"></div>
+
+  <div>
+    <label for="localAddressState">State</label>
+    <input id="user_local_address_state" type="text">
+  </div>
+   <div id="error_local_address_state"></div>
+
+
+  <div>
+    <label for="localAddressPinCode">Pin Code</label>
+    <input id="user_local_address_pin_code" type="text">
+  </div>
+   <div id="error_local_address_pincode"></div>
+
+  <div><%= f.label :permanent_address %>
+      <%= f.hidden_field :permanent_address %>
+  </div>
+
+  <div>
+    <label for="PermanentAddressCity">City</label>
+    <input id="user_permanent_address_city" type="text">
+  </div>
+  <div id="error_permanent_address_city"></div>
+
+
+  <div>
+    <label for="permanentAddressState">State</label>
+    <input id="user_permanent_address_state" type="text">
+  </div>
+  <div id="error_permanent_address_state"></div>
+
+  <div>
+    <label for="permanentAddressPinCode">Pin Code</label>
+    <input id="user_permanent_address_pin_code" type="text">
+  </div>
+  <div id="error_permanent_address_pincode"></div>
+
+  <!---  %= render "#{@user.current_step}_step", :f => f % -->
+  <!--- first_step_users_path link_to "First_Step", first_step_users_path(:permanent_address => "abc" )  -->
+  <button type="button" id="bttn_next">Next</button>
+
+  <button type="button" id="bttn_previous">Previous</button>
+  <%= text_field_tag 'search_name', :class => 'search_save'%>
+  <!-- %= link_to "First Step", :id => 'first_step_id', :controller => "/users", :action => "first_step", :value => "hi",:method => :post% -->
+   <%= link_to "First Step", :controller => "/users", :action => "first_step", :id => 'link_first_step_id'%>
+
+  
+   <div>
+     <input type="submit" value="Sign up" name="commit" id="submit_id">
+   </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+
+
+<script type="text/javascript">
+
+  var ck_phone_number = /^[0-9 ]{10,10}$/;
+  var ck_emergency_phone_number = /^[0-9 ]{10,10}$/;
+  var ck_emergency_contact_person = /^[a-z]$/;
+  var ck_alternate_phone_number = /^[0-9 ]{10,10}$/;
+  var ck_official_email_id = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  var ck_alternate_email_id = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  var ck_english  = /^[A-Za-z]+$/;
+  var ck_local_address_pincode = /^[0-9 ]{6,6}$/;
+  var ck_pincode = /^[0-9 ]{6,6}$/;
+
+  $(document).ready(function() {
+    // Hide second page labels
+    $('label[for="user_date_of_birth"]').hide();
+    $('label[for="user_blood_group"]').hide();
+    $('label[for="user_local_address"]').hide();
+    $('label[for="localAddressCity"]').hide();
+    $('label[for="localAddressState"]').hide();
+    $('label[for="localAddressPinCode"]').hide();
+    $('label[for="user_permanent_address"]').hide();
+    $('label[for="PermanentAddressCity"]').hide();
+    $('label[for="permanentAddressState"]').hide();
+    $('label[for="permanentAddressPinCode"]').hide();
+
+    // Hide second page text fields
+    $("#user_date_of_birth").hide();
+    $("#user_local_address_city").hide();
+    $("#user_local_address_state").hide();
+    $("#user_local_address_pin_code").hide();
+    $("#user_permanent_address_city").hide();
+    $("#user_permanent_address_state").hide();
+    $("#user_permanent_address_pin_code").hide();
+
+    // Hide second page select
+    $("#user_blood_group").hide();
+
+    // Hide second page button
+    $("#bttn_previous").hide();
+    $("#submit_id").hide();
+
+   });
+
+  $('#user_date_of_birth').datepicker({maxDate: "0M",dateFormat: "yy-mm-dd" });
+
+  $("#user_email").focusout(function() {
+    
+  });
+
+
+  $('#bttn_next').click(function() {
+
+      var errors = "";
+      var phone_number = $('#user_phone_number').val();
+      var emergency_phone_number = $('#user_emergency_phone_number').val();
+      var emergency_contact_person = $('#user_emergency_contact_person').val();
+      var alternate_phone_number = $('#user_alternate_phone_number').val();
+      var official_email_id = $('#user_official_email_id').val();
+      var alternate_email_id = $('#user_alternate_email_id').val();
+
+    
+      // Validations of fields entered by user on the "next" button click 
+      if (!ck_phone_number.test(phone_number)) {
+         errors += " error1";
+         $("#error_phone_number").css('color','red');
+         $("#error_phone_number").text(" Enter 10 digit phone number ");
+         $("#user_phone_number").css('border-color', 'red');
+       }
+       if (ck_phone_number.test(phone_number)) {
+         $("#error_phone_number").text(" ");
+         $("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       } 
+
+
+       if (!ck_emergency_phone_number.test(emergency_phone_number)) {
+         errors += "error2";
+         $("#error_emergency_phone_number").css('color','red');
+         $("#error_emergency_phone_number").text("Enter 10 digit emergency phone number ");
+         $("#user_emergency_phone_number").css('border-color', 'red');
+       }
+       if (ck_emergency_phone_number.test(emergency_phone_number)) {
+         $("#error_emergency_phone_number").text(" ");
+         $("#user_emergency_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+
+
+       if (!ck_alternate_phone_number.test(alternate_phone_number)) {
+         errors += "error3";
+         $("#error_alternate_phone_number").css('color','red');
+         $("#error_alternate_phone_number").text("Enter 10 digit alternate phone number ");
+         $("#user_alternate_phone_number").css('border-color', 'red');
+       }
+       if (ck_alternate_phone_number.test(alternate_phone_number)) {
+         $("#error_alternate_phone_number").text(" ");
+         $("#user_alternate_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       } 
+
+       if (!ck_official_email_id.test(official_email_id)) {
+         errors += "error4";
+         $("#error_official_email_id").css('color','red');
+         $("#error_official_email_id").text("Enter valid official email id");
+         $("#user_official_email_id").css('border-color', 'red');
+       }
+       if (ck_official_email_id.test(official_email_id)) {
+         $("#error_official_email_id").text(" ");
+         $("#user_official_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+
+
+       if (!ck_alternate_email_id.test(alternate_email_id)) {
+         errors += "error5";
+         $("#error_alternate_email_id").css('color','red');
+         $("#error_alternate_email_id").text(" Enter valid alternate email id ");
+         $("#user_alternate_email_id").css('border-color', 'red');
+       }
+       if (ck_alternate_email_id.test(alternate_email_id)) {
+         $("#error_alternate_email_id").text(" ");
+         $("#user_alternate_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+
+
+       if (errors.length == 0) {
+         // Hide current page fields(labels)
+         $('label[for="user_email"]').hide();
+         $('label[for="user_password"]').hide();
+         $('label[for="user_password_confirmation"]').hide();
+         $('label[for="user_phone_number"]').hide();
+         $('label[for="user_emergency_phone_number"]').hide();
+         $('label[for="user_emergency_contact_person"]').hide();
+         $('label[for="user_alternate_phone_number"]').hide();
+         $('label[for="user_official_email_id"]').hide();
+         $('label[for="user_alternate_email_id"]').hide();
+    
+        // Hide current page fields(text fields)
+        $("#user_email").hide();
+        $("#user_password").hide();
+        $("#user_password_confirmation").hide();
+        $("#user_phone_number").hide();
+        $("#user_emergency_phone_number").hide();
+        $("#user_emergency_contact_person").hide();
+        $("#user_alternate_phone_number").hide();
+        $("#user_official_email_id").hide();
+        $("#user_alternate_email_id").hide();
+  
+        // Hide current page fields(buttons)
+        $("#bttn_next").hide();
+
+
+        // Show next page fields(labels)
+        $('label[for="user_date_of_birth"]').show();
+        $('label[for="user_blood_group"]').show();
+        $('label[for="user_local_address"]').show();
+        $('label[for="localAddressCity"]').show();
+        $('label[for="localAddressState"]').show();
+        $('label[for="localAddressPinCode"]').show();
+        $('label[for="user_permanent_address"]').show();
+        $('label[for="PermanentAddressCity"]').show();
+        $('label[for="permanentAddressState"]').show();
+        $('label[for="permanentAddressPinCode"]').show();
+
+        // Show next page fields(text fields)
+        $("#user_local_address_city").show();
+        $("#user_local_address_state").show();
+        $("#user_local_address_pin_code").show();
+        $("#user_permanent_address_city").show();
+        $("#user_permanent_address_state").show();
+        $("#user_permanent_address_pin_code").show();
+        $("#user_date_of_birth").show();
+
+        // Show next page fields(buttons)
+        $("#bttn_previous").show();
+        $("#submit_id").show();
+
+        // Show next page fields(select)
+        $("#user_blood_group").show();
+
+       }
+
+  });
+
+  $('#bttn_previous').click(function() {
+
+       // Hide the current page fields (labels)
+        $('label[for="user_date_of_birth"]').hide();
+        $('label[for="user_blood_group"]').hide(); 
+        $('label[for="user_local_address"]').hide();
+        $('label[for="localAddressCity"]').hide();
+        $('label[for="localAddressState"]').hide();
+        $('label[for="localAddressPinCode"]').hide();
+        $('label[for="user_permanent_address"]').hide();
+        $('label[for="PermanentAddressCity"]').hide();
+        $('label[for="permanentAddressState"]').hide();
+        $('label[for="permanentAddressPinCode"]').hide();
+
+       // Hide the current page fields (text fields)
+        $("#user_local_address_city").hide();
+        $("#user_local_address_state").hide();
+        $("#user_local_address_pin_code").hide();
+        $("#user_permanent_address_city").hide();
+        $("#user_permanent_address_state").hide();
+        $("#user_permanent_address_pin_code").hide();
+        $("#user_date_of_birth").hide();
+
+        // Hide the current page fields (button)
+        $("#bttn_previous").hide();
+        $("#submit_id").hide();
+
+        // Hide the current page fields (select)
+        $("#user_blood_group").hide();
+
+
+        // Show previous page fields(labels)
+        $('label[for="user_email"]').show();
+        $('label[for="user_password"]').show();
+        $('label[for="user_password_confirmation"]').show();
+        $('label[for="user_phone_number"]').show();
+        $('label[for="user_emergency_phone_number"]').show();
+        $('label[for="user_emergency_contact_person"]').show();
+        $('label[for="user_alternate_phone_number"]').show();
+        $('label[for="user_official_email_id"]').show();
+        $('label[for="user_alternate_email_id"]').show();
+
+        // Show previous page fields(text fields)
+        $("#user_email").show();
+        $("#user_password").show();
+        $("#user_password_confirmation").show();
+        $("#user_phone_number").show();
+        $("#user_emergency_phone_number").show();
+        $("#user_emergency_contact_person").show();
+        $("#user_alternate_phone_number").show();
+        $("#user_official_email_id").show();
+        $("#user_alternate_email_id").show();
+
+        // Show the previous page fields(buttons)
+        $("#bttn_next").show();
+
+
+        // Set error div text of current page to blank
+        $("#error_local_address_city").text(" ");
+        $("#error_local_address_state").text(" ");
+        $("#error_local_address_pincode").text(" ");
+        $("#error_permanent_address_city").text(" ");
+        $("#error_permanent_address_state").text(" ");
+        $("#error_permanent_address_pincode").text(" ");
+
+        // Set text fields colour to their original color
+        $("#user_local_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $("#user_local_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $("#user_local_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $("#user_permanent_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $("#user_permanent_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $("#user_permanent_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+  });
+
+
+  // Validations on focus out from the text fields
+
+  $("#user_phone_number").focusout(function() {
+      var phone_number = $('#user_phone_number').val();
+      if (!ck_phone_number.test(phone_number)) {
+        $("#error_phone_number").css('color','red');
+        $("#error_phone_number").text(" Enter 10 digit phone number ");
+        $("#user_phone_number").css('border-color', 'red');
+      } 
+      if (ck_phone_number.test(phone_number)) {
+        $("#error_phone_number").text(" ");
+        $("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        
+      } 
+     
+  });
+
+  $("#user_emergency_phone_number").focusout(function() {
+      var emergency_phone_number = $('#user_emergency_phone_number').val();
+      if (!ck_emergency_phone_number.test(emergency_phone_number)) {
+        $("#error_emergency_phone_number").css('color','red');
+        $("#error_emergency_phone_number").text("Enter 10 digit emergency phone number");
+        $("#user_emergency_phone_number").css('border-color', 'red');
+      }
+      if (ck_emergency_phone_number.test(emergency_phone_number)) {
+        $("#error_emergency_phone_number").text(" ");
+        $("#user_emergency_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+      }
+
+  });
+
+  $("#user_emergency_contact_person").focusout(function() {
+      var emergency_contact_person = $('#user_emergency_contact_person').val();
+ /*     if (!ck_emergency_phone_number.test(emergency_phone_number)) {
+         $("#error_emergency_phone_number").text("Enter 10 digit emergency phone number");
+      }
+      if (ck_emergency_phone_number.test(emergency_phone_number)) {
+          $("#error_emergency_phone_number").text(" ");
+      }
+
+      $("#error_emergency_contact_person").text("focusout fired: "); */
+  }); 
+
+  $("#user_alternate_phone_number").focusout(function() {
+     var alternate_phone_number = $('#user_alternate_phone_number').val();
+     if (!ck_alternate_phone_number.test(alternate_phone_number)) {
+      $("#error_alternate_phone_number").css('color','red');
+      $("#error_alternate_phone_number").text("Enter 10 digit alternate phone number ");
+      $("#user_alternate_phone_number").css('border-color', 'red');
+     }
+
+     if (ck_alternate_phone_number.test(alternate_phone_number)) {
+       $("#error_alternate_phone_number").text(" ");
+       $("#user_alternate_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+     } 
+  }); 
+
+  $("#user_official_email_id").focusout(function() {
+      var official_email_id = $('#user_official_email_id').val();
+
+      if (!ck_official_email_id.test(official_email_id)) {
+        $("#error_official_email_id").css('color','red');
+        $("#error_official_email_id").text("Enter valid official email id");
+        $("#user_official_email_id").css('border-color', 'red');
+      }
+
+       if (ck_official_email_id.test(official_email_id)) {
+         $("#error_official_email_id").text(" ");
+         $("#user_official_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+  }); 
+
+  $("#user_alternate_email_id").focusout(function() {
+     var alternate_email_id = $('#user_alternate_email_id').val();
+
+     if (!ck_alternate_email_id.test(alternate_email_id)) {
+       $("#error_alternate_email_id").css('color','red');
+       $("#error_alternate_email_id").text(" Enter valid alternate email id ");
+       $("#user_alternate_email_id").css('border-color', 'red');
+     }
+
+     if (ck_alternate_email_id.test(alternate_email_id)) {
+      $("#error_alternate_email_id").text(" ");
+      $("#user_alternate_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
+     }
+  }); 
+
+    $("#user_local_address_city").focusout(function() {
+      var local_address_city = $("#user_local_address_city").val();
+      if(!ck_english.test(local_address_city)) {
+       $("#error_local_address_city").css('color','red');
+       $("#error_local_address_city").text(" Enter valid city name");
+       $("#user_local_address_city").css('border-color', 'red');
+        
+      }
+
+      if(ck_english.test(local_address_city)) {
+       $("#error_local_address_city").text(" ");
+       $("#user_local_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+      }
+
+    });
+
+    $("#user_local_address_state").focusout(function() {
+      var local_address_state = $("#user_local_address_state").val();
+      if(!ck_english.test(local_address_state)) {
+       $("#error_local_address_state").css('color','red');
+       $("#error_local_address_state").text(" Enter valid state name");
+       $("#user_local_address_state").css('border-color', 'red');
+        
+      }
+
+      if(ck_english.test(local_address_state)) {
+       $("#error_local_address_state").text(" ");
+       $("#user_local_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+      }
+    });
+
+    $("#user_local_address_pin_code").focusout(function() {
+      var local_address_pincode = $("#user_local_address_pin_code").val();
+      if(!ck_pincode.test(local_address_pincode)) {
+       $("#error_local_address_pincode").css('color','red');
+       $("#error_local_address_pincode").text(" Enter valid pincode");
+       $("#user_local_address_pin_code").css('border-color', 'red');
+        
+      }
+
+      if(ck_pincode.test(local_address_pincode)) {
+       $("#error_local_address_pincode").text(" ");
+       $("#user_local_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+      }
+    
+      $("#user_local_address").val($('#user_local_address_city').val() + "," + $("#user_local_address_state").val() + "-" + $("#user_local_address_pin_code").val());
+    });
+
+    $("#user_permanent_address_city").focusout(function() {
+      var permanent_address_city = $("#user_permanent_address_city").val();
+      if(!ck_english.test(permanent_address_city)) {
+       $("#error_permanent_address_city").css('color','red');
+       $("#error_permanent_address_city").text(" Enter valid city name");
+       $("#user_permanent_address_city").css('border-color', 'red');
+        
+      }
+
+      if(ck_english.test(permanent_address_city)) {
+         $("#error_permanent_address_city").text(" ");
+         $("#user_permanent_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+      }
+
+   });
+
+    $("#user_permanent_address_state").focusout(function() {
+      var permanent_address_state = $("#user_permanent_address_state").val();
+      if(!ck_english.test(permanent_address_state)) {
+       $("#error_permanent_address_state").css('color','red');
+       $("#error_permanent_address_state").text(" Enter valid state name");
+       $("#user_permanent_address_state").css('border-color', 'red');
+        
+      }
+
+      if(ck_english.test(permanent_address_state)) {
+       $("#error_permanent_address_state").text(" ");
+       $("#user_permanent_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+      }
+    });
+
+   $("#user_permanent_address_pin_code").focusout(function() {
+      var permanent_address_pincode = $("#user_permanent_address_pin_code").val();
+      if(!ck_pincode.test(permanent_address_pincode)) {
+       $("#error_permanent_address_pincode").css('color','red');
+       $("#error_permanent_address_pincode").text(" Enter valid pincode");
+       $("#user_permanent_address_pin_code").css('border-color', 'red');
+        
+      }
+
+      if(ck_pincode.test(permanent_address_pincode)) {
+       $("#error_permanent_address_pincode").text(" ");
+       $("#user_permanent_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+      }
+
+      $("#user_permanent_address").val($('#user_permanent_address_city').val() + "," + $("#user_permanent_address_state").val() + "-" + $("#user_permanent_address_pin_code").val());
+    });
+
+
+
+
+
+  function myFunction()
+  {
+    alert("I am an alert box!");
+  }
+
+    $('#new_user').submit(function() {
+      var errors = "";
+      var phone_number = $('#user_phone_number').val();
+      var emergency_phone_number = $('#user_emergency_phone_number').val();
+      var emergency_contact_person = $('#user_emergency_contact_person').val();
+      var alternate_phone_number = $('#user_alternate_phone_number').val();
+      var official_email_id = $('#user_official_email_id').val();
+      var alternate_email_id = $('#user_alternate_email_id').val();
+      var local_address_city = $("#user_local_address_city").val();
+      var local_address_state = $('#user_local_address_state').val();
+      var local_address_pincode = $("#user_local_address_pin_code").val();
+      var permanent_address_city = $("#user_permanent_address_city").val();
+      var permanent_address_state = $("#user_permanent_address_state").val();
+      var permanent_address_pincode = $("#user_permanent_address_pin_code").val();
+    
+       if (!ck_phone_number.test(phone_number)) {
+         errors += " error1";
+       }
+
+       if (!ck_emergency_phone_number.test(emergency_phone_number)) {
+         errors += "error2 ";
+       }
+
+       if (!ck_alternate_phone_number.test(alternate_phone_number)) {
+         errors += "error3";
+       }
+
+       if (!ck_official_email_id.test(official_email_id)) {
+         errors += "error4";
+       }
+
+       if (!ck_alternate_email_id.test(alternate_email_id)) {
+         errors += "error5";
+       }
+
+       if(!ck_english.test(local_address_city)) {
+         errors += "error6";
+         $("#error_local_address_city").css('color','red');
+         $("#error_local_address_city").text(" Enter valid city name");
+         $("#user_local_address_city").css('border-color', 'red');
+       }
+       if(ck_english.test(local_address_city)) {
+         $("#error_local_address_city").text(" ");
+         $("#user_local_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+
+       if(!ck_english.test(local_address_state)) {
+         errors += "error7";
+         $("#error_local_address_state").css('color','red');
+         $("#error_local_address_state").text(" Enter valid state name");
+         $("#user_local_address_state").css('border-color', 'red');
+       }
+       if(ck_english.test(local_address_state)) {
+         $("#error_local_address_state").text(" ");
+         $("#user_local_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+
+       if(!ck_pincode.test(local_address_pincode)) {
+         errors += "error8";
+         $("#error_local_address_pincode").css('color','red');
+         $("#error_local_address_pincode").text(" Enter valid pincode");
+         $("#user_local_address_pin_code").css('border-color', 'red');
+       }
+       if(ck_pincode.test(local_address_pincode)) {
+         $("#error_local_address_pincode").text(" ");
+         $("#user_local_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+
+       if(!ck_english.test(permanent_address_city)) {
+         errors += "error9";
+         $("#error_permanent_address_city").css('color','red');
+         $("#error_permanent_address_city").text(" Enter valid city name");
+         $("#user_permanent_address_city").css('border-color', 'red');
+       }
+       if(ck_english.test(permanent_address_city)) {
+         $("#error_permanent_address_city").text(" ");
+         $("#user_permanent_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+
+       if(!ck_english.test(permanent_address_state)) {
+         errors += "error10";
+         $("#error_permanent_address_state").css('color','red');
+         $("#error_permanent_address_state").text(" Enter valid state name");
+         $("#user_permanent_address_state").css('border-color', 'red');
+       } 
+       if(ck_english.test(permanent_address_state)) {
+         $("#error_permanent_address_state").text(" ");
+         $("#user_permanent_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+ 
+       if(!ck_pincode.test(permanent_address_pincode)) {
+         errors += "error11";
+         $("#error_permanent_address_pincode").css('color','red');
+         $("#error_permanent_address_pincode").text(" Enter valid pincode");
+         $("#user_permanent_address_pin_code").css('border-color', 'red');
+       }
+       if(ck_pincode.test(permanent_address_pincode)) {
+         $("#error_permanent_address_pincode").text(" ");
+         $("#user_permanent_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       }
+       
+       alert("In new user submit");
+
+       if (errors.length > 0) {
+         return false;
+       }
+
+      return true;
+    });
+
+    $('#submit_id"').click(function() {
+      alert("In submit click");
+       $('#new_user').submit();
+    });
+
+</script>
+

@@ -4,20 +4,26 @@ class User < ActiveRecord::Base
   before_save :totalleaves
 
   has_many :leaves, :dependent => :destroy
-# validates_associated :leaves
+
+  # validates_associated :leaves
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :manager, :class_name => "User", :foreign_key => 'manager_id'
-  
+  delegate :email, :to => :manager, :prefix => true
+
   validates :email,
             :presence => true,
             :uniqueness => true,
             :format => { :with => /^[-a-z0-9_+\.]+\@(cuberoot\.in)$/i, :message => "should be a cuberoot.in email" }
 
 
-   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :manager_id, :joining_date, :role
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me,
+    :manager_id, :joining_date, :role,:phone_number,:emergency_phone_number,
+    :emergency_contact_person,:alternate_phone_number,:blood_group,
+    :official_email_id,:alternate_email_id,:date_of_birth,:local_address,
+    :permanent_address
 
   scope :managers, where(:role => 'manager')
   scope :non_admins, where(:role => ['manager', 'employee'])
@@ -32,7 +38,21 @@ class User < ActiveRecord::Base
     end
   end
 
+  def updateuserdetails
+    self.manager_id = params[:manager_id]
+    self.joining_date = params[:joining_date]
+    self.role = params[:role]
+  end
+
+  def current_step
+    @current_step || steps.first
+  end
+
+  def steps
+    %w[first second]
+  end
+
+  def next_step
+    self.current_step = steps[steps.index(current_step)+1]
+  end
 end
-
-
-

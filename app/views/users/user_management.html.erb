@@ -5,12 +5,13 @@
   <tr>
     <th>Employee</th>
     <th>Reporting Manager</th>
+    <th></th>
+    <th></th>
   </tr>
 
   <% @users.each do |user| %>
     <tr>
       <td><%= user.email %></td>
-      <td><%= user.manager.email %></td>
       <td><%= link_to 'Edit', edit_user_path(user.id) %></td>
       <td><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
     </tr>

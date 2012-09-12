@@ -1,0 +1,13 @@
+<% if leave.current_status == "Approved" %>
+  <tr>
+    <td><%= leave.created_at.strftime("%d-%m-%Y") %></td>
+    <td><%= leave.no_of_days %></td>
+    <td><%= leave.start_date.strftime("%d-%m-%Y") %></td>
+    <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
+    <td><%= leave.updated_at.strftime("%d-%m-%Y") %></td>
+    <td><% @users.each do |user|%>
+          <%= leave.user.manager.email %>
+        <% end %>
+    </td>
+  </tr>
+<% end %>

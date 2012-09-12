@@ -32,7 +32,7 @@ class SetupsController < ApplicationController
       if @setup.update_attributes(params[:setup])
         format.html { redirect_to setups_path, notice: 'Setup details successfully updated.' }
       else
-        format.html { render action: "edit" }
+        format.html { render "edit" }
       end
     end
   end
@@ -45,7 +45,7 @@ class SetupsController < ApplicationController
       if @setup.save
         format.html { redirect_to setups_path, notice: 'Setup details Submitted' }
       else
-        format.html { render action: "new" }
+        format.html { render "new" }
       end
     end
   end

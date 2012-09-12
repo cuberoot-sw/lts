@@ -10,7 +10,7 @@
     %th Start_date
     %th End_date
     %th Current_status
-    
+/    = render @leaves
   - @leaves.each do |leave|
     - if leave.current_status == "Pending"
       %tr
@@ -67,7 +67,7 @@
             %td= leave.start_date.strftime("%d-%m-%Y")
             %td= leave.end_date.strftime("%d-%m-%Y")
             %td= leave.current_status
-            %td= leave.user.email
+            %td= leave.user_email
             %td
               = link_to 'Approve/Reject', approve_reject_leave_path(:id => leave.id, :user_id => leave.user.id)
 
@@ -95,7 +95,7 @@
             %td= leave.start_date.strftime("%d-%m-%Y")
             %td= leave.end_date.strftime("%d-%m-%Y")
             %td= leave.updated_at.strftime("%d-%m-%Y")
-            %td= leave.user.email
+            %td= leave.user_email
             %td= button_to 'Reject (in case)', {:action => :update, :id => leave.id, :commit => "Reject (in case)"}, :method => :put
 
   %br/
@@ -123,7 +123,7 @@
             %td= leave.start_date.strftime("%d-%m-%Y")
             %td= leave.end_date.strftime("%d-%m-%Y")
             %td= leave.updated_at.strftime("%d-%m-%Y")
-            %td= leave.user.email
+            %td= leave.user_email
 
 
 

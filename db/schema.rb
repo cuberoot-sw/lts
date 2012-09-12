@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120702084727) do
+ActiveRecord::Schema.define(:version => 20120827072038) do
 
   create_table "holidays", :force => true do |t|
     t.date     "date"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(:version => 20120702084727) do
     t.datetime "approved_on"
     t.string   "rejection_reason"
     t.integer  "approved_by"
-    t.date     "leaves_by_year"
   end
 
   add_index "leaves", ["user_id"], :name => "index_leaves_on_user_id"
@@ -45,23 +44,33 @@ ActiveRecord::Schema.define(:version => 20120702084727) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "",           :null => false
-    t.string   "encrypted_password",     :default => "",           :null => false
+    t.string   "email",                                 :default => "",           :null => false
+    t.string   "encrypted_password",                    :default => "",           :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",                         :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
-    t.string   "role",                   :default => "employee"
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.string   "role",                                  :default => "employee"
     t.string   "name"
     t.float    "total_leaves"
-    t.date     "joining_date",           :default => '2012-01-01'
+    t.date     "joining_date",                          :default => '2012-01-01'
     t.integer  "manager_id"
+    t.integer  "phone_number",             :limit => 8
+    t.integer  "emergency_phone_number",   :limit => 8
+    t.string   "emergency_contact_person"
+    t.integer  "alternate_phone_number",   :limit => 8
+    t.string   "blood_group"
+    t.string   "official_email_id"
+    t.string   "alternate_email_id"
+    t.date     "date_of_birth"
+    t.string   "local_address"
+    t.string   "permanent_address"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

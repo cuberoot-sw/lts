@@ -17,23 +17,8 @@
     <% end %>-->
   </tr>
 
-    <% @leaves.each do |leave| %>
-      <% if leave.current_status == "Pending" %>
-        <tr>
-          <td><%= leave.created_at.strftime("%d-%m-%Y") %></td>
-          <td><%= leave.no_of_days %></td>
-          <td><%= leave.start_date.strftime("%d-%m-%Y") %></td>
-          <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
-          <td><%= leave.current_status %></td>
-          <!--<% if current_user.role == 'manager'%>
-            <td><%= leave.user.email %></td>
-            <td>
-              <%= link_to 'Approve/Reject', approve_reject_leave_path(:id => leave.id, :user_id => leave.user.id)%>
-            </td>
-          <% end %> -->
-        </tr>
-      <% end %>
-    <% end %>
+ <%= render :partial => "pending_leaves", :collection => @leaves, :as => :leave %>
+
 </table>
 
 <br />
@@ -53,28 +38,35 @@
       <th>Action</th>
     <% end %>-->
   </tr>
-
-    <% @leaves.each do |leave| %>
-      <% if leave.current_status == "Rejected" %>
-        <tr>
-          <td><%= leave.created_at.strftime("%d-%m-%Y") %></td>
-          <td><%= leave.no_of_days %></td>
-          <td><%= leave.start_date.strftime("%d-%m-%Y") %></td>
-          <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
-          <td><%= leave.current_status %></td>
-          <!--<% if current_user.role == 'manager'%>
-            <td><%= leave.user.email %></td>
-            <td>
-              <%= link_to 'Approve/Reject', approve_reject_leave_path(:id => leave.id, :user_id => leave.user.id)%>
-            </td>
-          <% end %> -->
-        </tr>
-      <% end %>
-    <% end %>
+  <%= render :partial => "rejected_leaves", :collection => @leaves, :as => :leave %>
 </table>
 
+<!--- -->
+<br />
+<hr />
+<br />
+<table>
+  <caption>Approved Leaves of <%= current_user.email %></caption>
+  <tr>
+    <th>Applied_on</th>
+    <th>No_of_Days</th>
+    <th>Start_date</th>
+    <th>End_date</th>
+    <th>Approved_on</th>
+    <th>Approved_by</th>
+   </tr>
 
-<%= render 'form' %>
+  <%= render :partial => "approved_leaves", :collection => @leaves, :as => :leave %></table>
+
+<br />
+<hr />
+<br />
+<%= link_to "Apply for Leave", new_leave_path, :class => 'btn' %>
+<br />
+<br />
+
+<%= link_to "Holiday List", holidays_index_path %>
+
 
 <% if current_user.role == 'manager' %>
   <table>

@@ -13,3 +13,19 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+///**/
+$(function() {
+    // Add click event binding to `Save search` link
+    $("#link_first_step_id").on("click", function(event) {
+        event.preventDefault(); // don't trigger default
+
+        // get the value inside the text field
+        var name = $("#search_name").val();
+
+        $.post('/first_step', { search_name: name }, function(data) {
+            // log the result from the server, or whatever...
+            console.log(data);
+        });
+    });
+});
+

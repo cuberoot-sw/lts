@@ -7,17 +7,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def first_step
-    debugger
-  #  permanent_address = params[:permanent_address]
- #   emergency_phone_number = params[:emergency_phone_number]
-    user = params[:user]
-    search = params[:search]
-    official_email_id = params[:user][:official_email_id]
-    render "first_step"
- #   render "first_step", :locals => {:offical_email => offical_email_id}
-  end
- 
  # edit user details
   def edit
     @user= User.find(params[:id])

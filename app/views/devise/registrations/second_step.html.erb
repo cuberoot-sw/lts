@@ -77,13 +77,8 @@
   </div>
   <div id="error_permanent_address_pincode"></div>
 
-  <div>
-    <%= link_to "Test", first_step_registrations_path(@user), :method => :post  %>
-    <%= link_to "Test1", :url => first_step_registrations_path, :method =>:post %>
-    <%= link_to "Test2", { :controller => "registrations", :action => "first_step", :method => :post, :name => "commit" } %>
-  </div>
-  <div><input type="submit" value="Sign up" name="commit" id="submit_id"> </div>
-  <div><input type="button" value="Previous" name="commit" id="bttn_previous"> </div>
+  <div><input type="submit" value="Sign up" name="commit" id="bttn_submit"> </div>
+  <div><input type="submit" value="Previous" name="commit" id="bttn_previous"> </div>
 
   <%= render "devise/shared/links" %>
 <% end %>
@@ -93,6 +88,7 @@
   var ck_english  = /^[A-Za-z]+$/;
   var ck_local_address_pincode = /^[0-9 ]{6,6}$/;
   var ck_pincode = /^[0-9 ]{6,6}$/;
+  var ck_previous_click = false;
 
   $('#user_date_of_birth').datepicker({maxDate: "0M",dateFormat: "yy-mm-dd" });
 
@@ -152,8 +148,7 @@
        $("#error_permanent_address_city").css('color','red');
        $("#error_permanent_address_city").text(" Enter valid city name");
        $("#user_permanent_address_city").css('border-color', 'red');
-        
-      }
+     }
 
       if(ck_english.test(permanent_address_city)) {
          $("#error_permanent_address_city").text(" ");
@@ -203,7 +198,12 @@
     alert("I am an alert box!");
   }
 
-  $('#new_user').submit(function() {
+
+
+
+
+$('#new_user').submit(function() {
+    if(ck_previous_click == false) {
       var errors = "";
       var phone_number = $('#user_phone_number').val();
       var emergency_phone_number = $('#user_emergency_phone_number').val();
@@ -291,13 +291,23 @@
          return false;
        }
 
+       return true;
+    }
+    else {
       return true;
-    });
+    }
+});
 
-    $('#submit_id"').click(function() {
+  $('#bttn_submit').click(function() {
       alert("In submit click");
        $('#new_user').submit();
+   });
+
+    $('#bttn_previous').click(function() {
+       ck_previous_click = true;
     });
+
+
 
 </script>
 

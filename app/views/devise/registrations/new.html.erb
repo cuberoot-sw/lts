@@ -8,21 +8,11 @@
     <%= f.email_field :email %></div>
   <div id="error_email"></div>
 
-
-  <div><%= f.label :password %>
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %></div>
-
   <div><%= f.label :phone_number %>
     <%= f.text_field :phone_number %></div>
    <div id="error_phone_number"> </div>
 
- <!--- :emergency_phone_number,:emergency_contact_person,:alternate_phone_number,:blood_group,
-  :official_email_id,:alternate_email_id,:date_of_birth,:local_address,:permanent_address
-  -->
-    <div><%= f.label :emergency_phone_number %>
+   <div><%= f.label :emergency_phone_number %>
       <%= f.text_field :emergency_phone_number %></div>
      <div id="error_emergency_phone_number"></div>
 
@@ -223,137 +213,6 @@
       return true;
     });
 
-/*
-   $('#bttn_next').click(function() {
-
-      var errors = "";
-      var phone_number = $('#user_phone_number').val();
-      var emergency_phone_number = $('#user_emergency_phone_number').val();
-      var emergency_contact_person = $('#user_emergency_contact_person').val();
-      var alternate_phone_number = $('#user_alternate_phone_number').val();
-      var official_email_id = $('#user_official_email_id').val();
-      var alternate_email_id = $('#user_alternate_email_id').val();
-
-    
-      // Validations of fields entered by user on the "next" button click 
-      if (!ck_phone_number.test(phone_number)) {
-         errors += " error1";
-         $("#error_phone_number").css('color','red');
-         $("#error_phone_number").text(" Enter 10 digit phone number ");
-         $("#user_phone_number").css('border-color', 'red');
-       }
-       if (ck_phone_number.test(phone_number)) {
-         $("#error_phone_number").text(" ");
-         $("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
-       } 
-
-
-       if (!ck_emergency_phone_number.test(emergency_phone_number)) {
-         errors += "error2";
-         $("#error_emergency_phone_number").css('color','red');
-         $("#error_emergency_phone_number").text("Enter 10 digit emergency phone number ");
-         $("#user_emergency_phone_number").css('border-color', 'red');
-       }
-       if (ck_emergency_phone_number.test(emergency_phone_number)) {
-         $("#error_emergency_phone_number").text(" ");
-         $("#user_emergency_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
-       }
-
-
-       if (!ck_alternate_phone_number.test(alternate_phone_number)) {
-         errors += "error3";
-         $("#error_alternate_phone_number").css('color','red');
-         $("#error_alternate_phone_number").text("Enter 10 digit alternate phone number ");
-         $("#user_alternate_phone_number").css('border-color', 'red');
-       }
-       if (ck_alternate_phone_number.test(alternate_phone_number)) {
-         $("#error_alternate_phone_number").text(" ");
-         $("#user_alternate_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
-       } 
-
-       if (!ck_official_email_id.test(official_email_id)) {
-         errors += "error4";
-         $("#error_official_email_id").css('color','red');
-         $("#error_official_email_id").text("Enter valid official email id");
-         $("#user_official_email_id").css('border-color', 'red');
-       }
-       if (ck_official_email_id.test(official_email_id)) {
-         $("#error_official_email_id").text(" ");
-         $("#user_official_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
-       }
-
-
-       if (!ck_alternate_email_id.test(alternate_email_id)) {
-         errors += "error5";
-         $("#error_alternate_email_id").css('color','red');
-         $("#error_alternate_email_id").text(" Enter valid alternate email id ");
-         $("#user_alternate_email_id").css('border-color', 'red');
-       }
-       if (ck_alternate_email_id.test(alternate_email_id)) {
-         $("#error_alternate_email_id").text(" ");
-         $("#user_alternate_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
-       }
-
-
-       if (errors.length == 0) {
-         // Hide current page fields(labels)
-         $('label[for="user_email"]').hide();
-         $('label[for="user_password"]').hide();
-         $('label[for="user_password_confirmation"]').hide();
-         $('label[for="user_phone_number"]').hide();
-         $('label[for="user_emergency_phone_number"]').hide();
-         $('label[for="user_emergency_contact_person"]').hide();
-         $('label[for="user_alternate_phone_number"]').hide();
-         $('label[for="user_official_email_id"]').hide();
-         $('label[for="user_alternate_email_id"]').hide();
-    
-        // Hide current page fields(text fields)
-        $("#user_email").hide();
-        $("#user_password").hide();
-        $("#user_password_confirmation").hide();
-        $("#user_phone_number").hide();
-        $("#user_emergency_phone_number").hide();
-        $("#user_emergency_contact_person").hide();
-        $("#user_alternate_phone_number").hide();
-        $("#user_official_email_id").hide();
-        $("#user_alternate_email_id").hide();
-  
-        // Hide current page fields(buttons)
-        $("#bttn_next").hide();
-
-
-        // Show next page fields(labels)
-        $('label[for="user_date_of_birth"]').show();
-        $('label[for="user_blood_group"]').show();
-        $('label[for="user_local_address"]').show();
-        $('label[for="localAddressCity"]').show();
-        $('label[for="localAddressState"]').show();
-        $('label[for="localAddressPinCode"]').show();
-        $('label[for="user_permanent_address"]').show();
-        $('label[for="PermanentAddressCity"]').show();
-        $('label[for="permanentAddressState"]').show();
-        $('label[for="permanentAddressPinCode"]').show();
-
-        // Show next page fields(text fields)
-        $("#user_local_address_city").show();
-        $("#user_local_address_state").show();
-        $("#user_local_address_pin_code").show();
-        $("#user_permanent_address_city").show();
-        $("#user_permanent_address_state").show();
-        $("#user_permanent_address_pin_code").show();
-        $("#user_date_of_birth").show();
-
-        // Show next page fields(buttons)
-        $("#bttn_previous").show();
-        $("#submit_id").show();
-
-        // Show next page fields(select)
-        $("#user_blood_group").show();
-
-       }
-
-  });
-*/
 
     $('#bttn_next"').click(function() {
   //    alert("In submit click");

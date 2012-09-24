@@ -28,6 +28,12 @@ CuberootLts::Application.routes.draw do
 
   end
 
+#  resources :registrations do
+#    member do
+#      get 'first_step'
+#    end
+#  end
+
   resources :registrations do
     collection do
       post 'first_step'

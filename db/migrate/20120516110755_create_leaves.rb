@@ -1,7 +1,7 @@
 class CreateLeaves < ActiveRecord::Migration
   def change
     create_table :leaves do |t|
-      t.references :user,  :null => false, :foreign_key => true
+      t.references :user,  null: false, foreign_key: true
       t.datetime :applied_on
       t.datetime :start_date
       t.datetime :end_date

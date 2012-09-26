@@ -6,9 +6,9 @@
     <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
     <td><%= leave.current_status %></td>
     <!--<% if current_user.role == 'manager'%>
-    <td><%= leave.user.email %></td>
+    <td><%= leave.user_email %></td>
     <td>
-    <%= link_to 'Approve/Reject', approve_reject_leave_path(:id => leave.id, :user_id => leave.user.id)%>
+    <%= link_to 'Approve/Reject', approve_reject_leave_path(id: leave.id, user_id: leave.user.id)%>
     </td>
     <% end %> -->
   </tr>

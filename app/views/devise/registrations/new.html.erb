@@ -1,8 +1,7 @@
 <h2>Sign up</h2>
 
-<%= form_for @user,:url => second_step_registrations_path do |f| %>
+<%= form_for @user,url: second_step_registrations_path do |f| %>
   <%= devise_error_messages! %>
-  
   <div id="errorDiv_id"></div>
   <div><%= f.label :email %>
     <%= f.email_field :email %></div>
@@ -33,7 +32,7 @@
     <div><%= f.label :alternate_email_id %>
       <%= f.text_field :alternate_email_id %></div>
     <div id="error_alternate_email_id"></div>
- 
+
    <input type="submit" value="Next" id="bttn_next">
 
 <% end %>
@@ -59,13 +58,11 @@
         $("#error_phone_number").css('color','red');
         $("#error_phone_number").text(" Enter 10 digit phone number ");
         $("#user_phone_number").css('border-color', 'red');
-      } 
+      }
       if (ck_phone_number.test(phone_number)) {
         $("#error_phone_number").text(" ");
         $("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
-        
-      } 
-     
+      }
   });
 
   $("#user_emergency_phone_number").focusout(function() {
@@ -92,7 +89,7 @@
       }
 
       $("#error_emergency_contact_person").text("focusout fired: "); */
-  }); 
+  });
 
   $("#user_alternate_phone_number").focusout(function() {
      var alternate_phone_number = $('#user_alternate_phone_number').val();
@@ -105,8 +102,8 @@
      if (ck_alternate_phone_number.test(alternate_phone_number)) {
        $("#error_alternate_phone_number").text(" ");
        $("#user_alternate_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
-     } 
-  }); 
+     }
+  });
 
   $("#user_official_email_id").focusout(function() {
       var official_email_id = $('#user_official_email_id').val();
@@ -121,7 +118,7 @@
          $("#error_official_email_id").text(" ");
          $("#user_official_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
-  }); 
+  });
 
   $("#user_alternate_email_id").focusout(function() {
      var alternate_email_id = $('#user_alternate_email_id').val();
@@ -136,7 +133,7 @@
       $("#error_alternate_email_id").text(" ");
       $("#user_alternate_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
      }
-  }); 
+  });
 
 
     $('#new_user').submit(function() {
@@ -157,7 +154,7 @@
        if (ck_phone_number.test(phone_number)) {
          $("#error_phone_number").text(" ");
          $("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
-       } 
+       }
 
 
        if (!ck_emergency_phone_number.test(emergency_phone_number)) {
@@ -220,4 +217,3 @@
     });
 
 </script>
-

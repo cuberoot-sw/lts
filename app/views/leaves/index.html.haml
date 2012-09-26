@@ -82,7 +82,7 @@
       %th End_date
       %th Approved_on
       %th Email
-      %th 
+      %th
 
     - @subordinates = User.where(:manager_id => current_user.id)
     - @subordinates.each do |subordinate|
@@ -124,17 +124,3 @@
             %td= leave.end_date.strftime("%d-%m-%Y")
             %td= leave.updated_at.strftime("%d-%m-%Y")
             %td= leave.user_email
-
-
-
-
-
-
-
-
-
-
-
-
-
-

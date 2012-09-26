@@ -1,5 +1,5 @@
 %h2 Edit Holiday List
-= form_for @holiday, :url => { :action => "update" } do |f|
+= form_for @holiday, url: { action: "update" } do |f|
   -@holiday.errors.full_messages.each do |msg|
     %p= msg
 

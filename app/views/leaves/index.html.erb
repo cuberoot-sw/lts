@@ -17,7 +17,7 @@
     <% end %>-->
   </tr>
 
- <%= render :partial => "pending_leaves", :collection => @leaves, :as => :leave %>
+ <%= render partial: "pending_leaves", collection: @leaves, as: :leave %>
 
 </table>
 
@@ -38,7 +38,7 @@
       <th>Action</th>
     <% end %>-->
   </tr>
-  <%= render :partial => "rejected_leaves", :collection => @leaves, :as => :leave %>
+  <%= render partial: "rejected_leaves", collection: @leaves, as: :leave %>
 </table>
 
 <!--- -->
@@ -56,7 +56,7 @@
     <th>Approved_by</th>
    </tr>
 
-  <%= render :partial => "approved_leaves", :collection => @leaves, :as => :leave %></table>
+  <%= render partial: "approved_leaves", collection: @leaves, as: :leave %></table>
 
 <br />
 <hr />
@@ -81,7 +81,7 @@
       <th>Action</th>
     </tr>
 
-  <% @subordinates = User.where(:manager_id => current_user.id) %>
+  <% @subordinates = User.where(manager_id: current_user.id) %>
   <% @subordinates.each do |subordinate| %>
     <% @subordinates_leaves = subordinate.leaves %>
     <% @subordinates_leaves.each do |leave| %>
@@ -92,10 +92,10 @@
         <td><%= leave.start_date.strftime("%d-%m-%Y") %></td>
         <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
         <td><%= leave.current_status %></td>
-        <td><%= leave.user.email %></td>
+        <td><%= leave.user_email %></td>
         <td>
-          <%= link_to 'Approve/Reject', approve_reject_leave_path(:id => leave.id, :user_id => leave.user.id)%>
-        </td> 
+          <%= link_to 'Approve/Reject', approve_reject_leave_path(id: leave.id, user_id: leave.user.id)%>
+        </td>
       </tr>
     <% end %>
     <% end %>
@@ -117,8 +117,8 @@
     <th>Email</th>
     <th></th>
    </tr>
-   
-   <% @subordinates = User.where(:manager_id => current_user.id) %>
+
+   <% @subordinates = User.where(manager_id: current_user.id) %>
    <% @subordinates.each do |subordinate| %>
       <% @subordinates_leaves = subordinate.leaves %>
       <% @subordinates_leaves.each do |leave| %>
@@ -129,8 +129,8 @@
           <td><%= leave.start_date.strftime("%d-%m-%Y") %></td>
           <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
           <td><%= leave.updated_at.strftime("%d-%m-%Y") %></td>
-          <td><%= leave.user.email %></td>
-          <td><%= button_to 'Reject (in case)', {:action => :update, :id => leave.id, :commit => "Reject (in case)"}, :method => :put %></td>
+          <td><%= leave.user_email %></td>
+          <td><%= button_to 'Reject (in case)', { action: :update, id: leave.id, commit: "Reject (in case)" }, method: :put %></td>
         </tr>
       <% end %>
     <% end %>
@@ -151,8 +151,8 @@
     <th>Approved_on</th>
     <th>Email</th>
   </tr>
-   
-   <% @subordinates = User.where(:manager_id => current_user.id) %>
+
+   <% @subordinates = User.where(manager_id: current_user.id) %>
    <% @subordinates.each do |subordinate| %>
       <% @subordinates_leaves = subordinate.leaves %>
       <% @subordinates_leaves.each do |leave| %>
@@ -163,7 +163,7 @@
           <td><%= leave.start_date.strftime("%d-%m-%Y") %></td>
           <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
           <td><%= leave.updated_at.strftime("%d-%m-%Y") %></td>
-          <td><%= leave.user.email %></td>
+          <td><%= leave.user_email %></td>
         </tr>
       <% end %>
     <% end %>

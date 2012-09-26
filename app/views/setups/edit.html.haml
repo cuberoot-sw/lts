@@ -1,5 +1,5 @@
 %h2 Edit Setup
-= form_for @setup, :url => { :action => "update" } do |f|
+= form_for @setup, url: { action: "update" } do |f|
   - @setup.errors.full_messages.each do |msg|
     %p= msg
   .field
@@ -11,7 +11,7 @@
     %br/
     = f.text_field :year
   .actions
-    = f.submit, :class => "update_setup"
+    = f.submit, class: "update_setup"
 = link_to 'Back', setups_path
 
 

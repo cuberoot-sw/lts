@@ -4,7 +4,7 @@
 
    <title>CuberootLts</title>
 
-  <%= stylesheet_link_tag    "bootstrap.min", "lts","jquery-ui-1.8.23.custom", :media => "all" %>
+  <%= stylesheet_link_tag    "bootstrap.min", "lts","jquery-ui-1.8.23.custom", media: "all" %>
   <%= javascript_include_tag "application","jquery-1.7.2.min","jquery-ui-1.8.23.custom.min" %>
   <%= csrf_meta_tags %>
   <h1>Cube Root Lts.</h1>
@@ -30,7 +30,7 @@
         <div id="user_nav" class="pull-right">
           <% if user_signed_in? %>
             Signed in as <%= current_user.email %>. Not you?
-            <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+            <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
             <% if current_user.role == 'manager' or current_user.role == 'employee' %>
               <%= label_tag 'Year' %>
               <%= session[:current_year] %>

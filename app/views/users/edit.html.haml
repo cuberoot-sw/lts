@@ -1,5 +1,5 @@
 %h2 Edit Employee's Information
-= form_for @user, :url => { :action => "update" } do |f|
+= form_for @user, url: { action: "update" } do |f|
   - @user.errors.full_messages.each do |msg|
     %p= msg
   .field

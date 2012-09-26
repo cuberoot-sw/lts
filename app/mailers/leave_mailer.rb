@@ -4,7 +4,7 @@ class LeaveMailer < ActionMailer::Base
   def leave_email(leave)
     @leave = leave
     content_type  "multipart/alternative"
-  end  
+  end
     #mail(:to => admin@cuberoot.com,
      #    :subject => "Application for leave")
 end

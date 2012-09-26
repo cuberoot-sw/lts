@@ -11,7 +11,7 @@
     %th End_Date
     %th Approved_on
     %th Approved_by
-   
+
   - @leaves.each do |leave|
     - if leave.current_status == "Approved"
       %tr

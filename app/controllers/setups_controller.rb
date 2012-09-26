@@ -30,7 +30,8 @@ class SetupsController < ApplicationController
     @setup = Setup.find(params[:id])
     respond_to do |format|
       if @setup.update_attributes(params[:setup])
-        format.html { redirect_to setups_path, notice: 'Setup details successfully updated.' }
+        format.html { redirect_to setups_path,
+                      notice: 'Setup details successfully updated.' }
       else
         format.html { render "edit" }
       end
@@ -43,7 +44,8 @@ class SetupsController < ApplicationController
 
     respond_to do |format|
       if @setup.save
-        format.html { redirect_to setups_path, notice: 'Setup details Submitted' }
+        format.html { redirect_to setups_path,
+                      notice: 'Setup details Submitted' }
       else
         format.html { render "new" }
       end
@@ -55,7 +57,7 @@ class SetupsController < ApplicationController
     @setup = Setup.find_by_id(params[:id])
     @setup.destroy
     flash[:notice] = 'Setup is successfully deleted.'
-    redirect_to :action => 'index'
+    redirect_to action: 'index'
   end
 
 end

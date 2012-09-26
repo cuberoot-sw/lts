@@ -2,10 +2,12 @@ CuberootLts::Application.routes.draw do
 
   get "holidays/index"
 
-  devise_for :users, :controllers => {:sessions => "sessions", :registrations => "registrations"}
+  devise_for :users, controllers: {sessions: "sessions",
+                                   registrations: "registrations"}
   devise_scope :user do
-    match "/registrations/second_step" => "registrations", :action => "second_step"
-    match "/registrations/first_step" => "registrations", :action => "first_step"
+    match "/registrations/second_step" => "registrations",
+      action: "second_step"
+    match "/registrations/first_step" => "registrations", action: "first_step"
     match "/registrations" => "registrations", :action => "create"
   end
 
@@ -34,13 +36,13 @@ CuberootLts::Application.routes.draw do
 #    end
 #  end
 
-  resources :registrations do
+  resources :registrations, only: [:create] do
     collection do
       post 'first_step'
     end
   end
 
-  resources :registrations do
+  resources :registrations, only: [:create] do
     collection do
       post 'second_step'
     end
@@ -51,6 +53,6 @@ CuberootLts::Application.routes.draw do
   resources :holidays, only: [:show, :new, :create, :update, :destroy, :index]
 
 
-root :to => "home#index"
+root to: "home#index"
 
 end

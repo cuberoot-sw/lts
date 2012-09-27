@@ -12,7 +12,7 @@ class LeavesController < ApplicationController
         format.html { redirect_to leave_path(@leave),
                       notice: 'Leave is Submitted' }
       else
-        format.html { render "new" }
+        format.html { render "new", error: 'Leave not Submitted' }
       end
     end
   end
@@ -28,9 +28,12 @@ class LeavesController < ApplicationController
   # updates leave details and saves updates leave details
   def update
     if params[:commit] == "Approve"
-      @leave.approved
+      @leave.current_status = "Approved"
+      @leave.approved_by = current_user.id
+      @leave.approved_on = Time.now
     elsif params[:commit] == "Reject"
-      @leave.rejected
+      @leave.current_status = "Rejected"
+      @leave.approved_by = current_user.id
       @leave.rejection_reason = params[:rejection_reason]
     elsif params[:commit] == "Reject (in case)"
       @leave.current_status = "Rejected"

@@ -31,17 +31,5 @@ class Leave < ActiveRecord::Base
     self.no_of_days = business_days['bd'].to_i - @govt_holiday
 
   end
-
-  def approved
-    self.current_status = "Approved"
-    self.approved_by = current_user.id
-    self.approved_on = Time.now
-  end
-
-  def rejected
-    self.current_status = "Rejected"
-    self.approved_by = current_user.id
-  end
-
 end
 

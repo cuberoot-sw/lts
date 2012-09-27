@@ -24,6 +24,10 @@
 
 <%= link_to "Manage Holiday List", holidays_index_path %>
 <%elsif current_user.role == 'employee' || current_user.role == 'manager' %>
+  <%= leaves_index_helper %>
+  <%= content_for :sidebar do %>
+    <%= render '/setups/leave_balance' %>
+  <% end %>
   <h2>Employee's DashBoard:-</h2>
 <table>
   <caption>Pending Leaves of <%= current_user.email %></caption>

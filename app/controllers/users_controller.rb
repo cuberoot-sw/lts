@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
   before_filter :find_user, only: [:edit, :show, :update]
+
   #returns all users list
   def index
     @users = User.all
@@ -40,8 +41,6 @@ class UsersController < ApplicationController
   # returns all users except admin
   def user_management
     @users = User.non_admins
-    #@users = User.find(:all,
-    #:conditions => ['id = ?' , "#{current_user.manager_id}%"])
     respond_to do |format|
       format.html
     end
@@ -51,7 +50,6 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id])
     @user.destroy
     flash[:notice] = 'User is successfully deleted.'
-    #redirect_to :action => 'user_management', :id=>session[:user_id]
     redirect_to user_management_user_path(current_user.id)
   end
 

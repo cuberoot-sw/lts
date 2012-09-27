@@ -5,7 +5,9 @@ class HolidaysController < ApplicationController
   def index
     @holidays_by_year = Holiday.yeardate
     if params[:commit] == "set"
-      @holidays_by_year = Holiday.find(:all, conditions: ['year(date) = ?', params[:date][:year]])
+      @holidays_by_year = Holiday.find(:all, conditions: \
+                                       ['year(date) = ?',
+                                        params[:date][:year]])
     end
   end
 

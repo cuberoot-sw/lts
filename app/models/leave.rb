@@ -25,8 +25,8 @@ class Leave < ActiveRecord::Base
     @govt_holiday = Holiday.where(["date between ? and ? ",
                                    start_date, end_date]).count
 
-    business_days = connection.select_all("select uGetBussinessDays('#{start_date}',
-                                          '#{end_date}') as bd").first
+    business_days = connection.select_all("select uGetBussinessDays\
+                      ('#{start_date}', '#{end_date}') as bd").first
 
     self.no_of_days = business_days['bd'].to_i - @govt_holiday
 

@@ -1,13 +1,15 @@
 class AddUGetBussinessDaysFunction < ActiveRecord::Migration
   def up
     execute "
-      CREATE function `uGetBussinessDays`(in_sDate DATE, in_eDate DATE) RETURNS VARCHAR(100)
+      CREATE function `uGetBussinessDays`(in_sDate DATE,
+        in_eDate DATE) RETURNS VARCHAR(100)
       BEGIN
       DECLARE l_count INT;
       DECLARE l_sDate DATE;
       SET l_sDate = in_sDate;
 
-      CREATE TEMPORARY TABLE IF NOT EXISTS _tblBussinessDays(BussinessDays date);
+      CREATE TEMPORARY TABLE IF NOT EXISTS _tblBussinessDays\
+        (BussinessDays date);
       CREATE TEMPORARY TABLE IF NOT EXISTS _tblHolidaysDays(Offdays date);
 
       delete from _tblBussinessDays;

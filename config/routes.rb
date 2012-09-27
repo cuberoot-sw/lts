@@ -50,7 +50,7 @@ CuberootLts::Application.routes.draw do
 
   resources :setups
 
-  resources :holidays, only: [:show, :new, :create, :update, :destroy, :index]
+  resources :holidays, only: [:show, :new, :create, :update, :destroy, :index, :edit]
 
 
 root to: "home#index"

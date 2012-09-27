@@ -1,5 +1,5 @@
 class LeavesController < ApplicationController
-  before_filter :find_leave, only: [:edit, :update, :show]
+  before_filter :find_leave_by_id, only: [:edit, :update, :show]
 
   # creates new leave and saves it.
   def create
@@ -28,15 +28,11 @@ class LeavesController < ApplicationController
   # updates leave details and saves updates leave details
   def update
     if params[:commit] == "Approve"
-        @leave.approved
-    end
-
-    if params[:commit] == "Reject"
+      @leave.approved
+    elsif params[:commit] == "Reject"
       @leave.rejected
       @leave.rejection_reason = params[:rejection_reason]
-    end
-
-    if params[:commit] == "Reject (in case)"
+    elsif params[:commit] == "Reject (in case)"
       @leave.current_status = "Rejected"
     end
 
@@ -62,33 +58,15 @@ class LeavesController < ApplicationController
   # returns all leaves associated with user
   def index
     if current_user.role == 'manager'
-      @leaves = Leave.find(:all, conditions: ['user_id = ? and
-                                              year(start_date) = ?',
-                                              current_user.id,
-                                              session[:current_year]])
-      #@leaves = current_user.leaves
-
-      #@subordinates = User.where(:manager_id => current_user.id)
-      #@subordinates.each do |subordinate|
-       # @subordinates_leaves = Leave.find(:all,
-      # :conditions => ['user_id => ?', subordinate.user_id])
-      #end
-
-       # subordinate.leaves
-      #end
+      @leaves = find_leave_by_id_year
     else
-      @leaves = Leave.find(:all, conditions: ['user_id = ? and
-                                              year(start_date) = ?',
-                                              current_user.id,
-                                              session[:current_year]])
+      @leaves = find_leave_by_id_year
     end
     @leaves_taken = Leave.where(['user_id = ? and current_status = ? and
                                  year(start_date) = ?',
                                  current_user.id, "Approved",
                                  session[:current_year]]).sum(:no_of_days)
 
-    #@leaves_taken = Leave.where(:current_status => "Approved").
-    #where(:user_id => "#{current_user.id}%").sum(:no_of_days)
     @setups = Setup.select("total_leaves").where(year: session[:current_year])
     @users = User.find(:all, conditions: ['id = ?' ,
                                           "#{current_user.manager_id}%"])
@@ -122,8 +100,16 @@ class LeavesController < ApplicationController
   end
 
   protected
-  def find_leave
+  def find_leave_by_id
     @leave = Leave.find(params[:id])
+  end
+
+  protected
+  def find_leave_by_id_year
+    Leave.find(:all, conditions: ['user_id = ? and
+                                              year(start_date) = ?',
+                                              current_user.id,
+                                              session[:current_year]])
   end
 
  end

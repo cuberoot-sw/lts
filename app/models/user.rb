@@ -35,15 +35,9 @@ class User < ActiveRecord::Base
     @setup.each do |s|
       leave_per_month = (s.total_leaves.to_f/12.to_f).to_f
       month_by_no = self.joining_date.strftime("%m")
-      leave_per_employee = (( 12 - (month_by_no.to_i - 1 ).to_f) * (leave_per_month.to_f )).to_f
+      leave_per_employee = (( 12 - (month_by_no.to_i - 1 ).to_f) *
+                            (leave_per_month.to_f )).to_f
       self.total_leaves = leave_per_employee.to_f
     end
   end
-
-  def updateuserdetails
-    self.manager_id = params[:manager_id]
-    self.joining_date = params[:joining_date]
-    self.role = params[:role]
-  end
-
 end

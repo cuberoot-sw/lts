@@ -152,7 +152,7 @@
           <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
           <td><%= leave.updated_at.strftime("%d-%m-%Y") %></td>
           <td><%= leave.user_email %></td>
-          <td><%= button_to 'Reject (in case)', { action: :update, id: leave.id, commit: "Reject (in case)" }, method: :put %></td>
+          <td><%= button_to 'Reject (in case)', { controller: :leaves, action: :update, id: leave.id, commit: "Reject (in case)" }, method: :put %></td>
         </tr>
       <% end %>
     <% end %>

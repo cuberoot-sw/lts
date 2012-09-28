@@ -34,7 +34,16 @@
             <% if current_user.role == 'manager' or current_user.role == 'employee' %>
               <%= label_tag 'Year' %>
               <%= session[:current_year] %>
-              <%= link_to 'Change Year', change_year_leave_path(current_user.id) %>
+              <!--- %= link_to 'Change Year', change_year_leave_path(current_user.id) % -->
+           
+              <%= form_tag('/leaves/set_year' ,:style => "margin:0;padding:0;display:inline;")   do  %>
+                <div class="span4">
+                  <%= select_year(Date.today) %>
+                  <%= button_to "set",:controller => "/leaves", :action => "set_year" %>
+                </div>
+             <%end%>
+           
+
             <% end %>
           <% else %>
             <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>

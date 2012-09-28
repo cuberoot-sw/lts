@@ -200,7 +200,11 @@
           %td= link_to 'Approve/Reject', approve_reject_leave_path(:id => leave.id, :user_id => leave.user.id)
 = render 'form'
 -->
-
+<script type="text/javascript">
+  $(document).ready(function() {
+      $(".span3").css({position: "fixed"});
+  });
+</script>
 
 
 

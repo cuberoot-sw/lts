@@ -19,9 +19,9 @@ class HolidaysController < ApplicationController
       if @holiday.save
         format.html { redirect_to holidays_index_path(@holiday),
                       notice: 'Holiday is Submitted' }
-
       else
-        format.html { render "new" }
+        format.html { render "new",
+                      error: 'Holiday not saved' }
       end
     end
   end

@@ -65,9 +65,14 @@ class LeavesController < ApplicationController
     else
       @leaves = find_leave_by_id_year
     end
-    @leaves_taken = Leave.where(['user_id = ? and current_status = ? and
+#    @leaves_taken = Leave.where(['user_id = ? and current_status = ? and
+#                                 year(start_date) = ?',
+#                                 current_user.id, "Approved",
+#                                 session[:current_year]]).sum(:no_of_days)
+
+    @leaves_taken = Leave.where(['user_id = ? and current_status in("Approved", "Pending") and
                                  year(start_date) = ?',
-                                 current_user.id, "Approved",
+                                 current_user.id,
                                  session[:current_year]]).sum(:no_of_days)
 
     @setups = Setup.select("total_leaves").where(year: session[:current_year])

@@ -2,6 +2,8 @@ CuberootLts::Application.routes.draw do
 
   get "holidays/index"
 
+  match "/leaves/set_year" => "leaves", :action => "set_year"
+
   devise_for :users, controllers: {sessions: "sessions",
                                    registrations: "registrations"}
   devise_scope :user do
@@ -11,7 +13,7 @@ CuberootLts::Application.routes.draw do
     match "/registrations" => "registrations", :action => "create"
   end
 
-  resources :leaves, only: [:show, :new, :create, :update, :destroy, :index] do
+  resources :leaves, only: [:show, :new, :create, :update, :destroy, :index, :set_year] do
     member do
       get 'approve_reject', 'change_year', 'reject_approved_leaves'
     end

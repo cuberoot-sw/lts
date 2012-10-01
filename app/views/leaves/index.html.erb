@@ -11,10 +11,6 @@
     <th>Start_date</th>
     <th>End_date</th>
     <th>Current_status</th>
-    <!-- <% if current_user.role == 'manager'%>
-      <th>Employee</th>
-      <th>Action</th>
-    <% end %>-->
   </tr>
 
  <%= render partial: "pending_leaves", collection: @leaves, as: :leave %>
@@ -33,15 +29,10 @@
     <th>Start_date</th>
     <th>End_date</th>
     <th>Current_status</th>
-    <!-- <% if current_user.role == 'manager'%>
-      <th>Employee</th>
-      <th>Action</th>
-    <% end %>-->
   </tr>
   <%= render partial: "rejected_leaves", collection: @leaves, as: :leave %>
 </table>
 
-<!--- -->
 <br />
 <hr />
 <br />
@@ -57,7 +48,6 @@
    </tr>
 
   <%= render partial: "approved_leaves", collection: @leaves, as: :leave %></table>
-
 <br />
 <hr />
 <br />
@@ -66,8 +56,9 @@
 <br />
 
 <%= link_to "Holiday List", holidays_index_path %>
-
-
+<div style="background: #9EB0C8;">
+  <hr id="hr1"/> 
+</div>
 <% if current_user.role == 'manager' %>
   <table>
     <caption>Pending leaves of employees</caption>
@@ -85,7 +76,7 @@
   <% @subordinates.each do |subordinate| %>
     <% @subordinates_leaves = subordinate.leaves %>
     <% @subordinates_leaves.each do |leave| %>
-      <% if leave.current_status == "Pending" %>
+      <% if leave.current_status == "Pending" && leave.start_date.year.to_s == session[:current_year].to_s %>
       <tr>
         <td><%= leave.created_at.strftime("%d-%m-%Y") %></td>
         <td><%= leave.no_of_days %></td>
@@ -122,7 +113,7 @@
    <% @subordinates.each do |subordinate| %>
       <% @subordinates_leaves = subordinate.leaves %>
       <% @subordinates_leaves.each do |leave| %>
-      <% if leave.current_status == "Approved" %>
+      <% if leave.current_status == "Approved"  && leave.start_date.year.to_s == session[:current_year].to_s %>
         <tr>
           <td><%= leave.created_at.strftime("%d-%m-%Y") %></td>
           <td><%= leave.no_of_days %></td>
@@ -156,9 +147,9 @@
    <% @subordinates.each do |subordinate| %>
       <% @subordinates_leaves = subordinate.leaves %>
       <% @subordinates_leaves.each do |leave| %>
-      <% if leave.current_status == "Rejected" %>
+      <% if leave.current_status == "Rejected" && leave.start_date.year.to_s == session[:current_year].to_s  %>
         <tr>
-          <td><%= leave.created_at.strftime("%d-%m-%Y") %></td>
+          <td><%= leave.created_at.strftime("%d-%m-%Y")  %></td>
           <td><%= leave.no_of_days %></td>
           <td><%= leave.start_date.strftime("%d-%m-%Y") %></td>
           <td><%= leave.end_date.strftime("%d-%m-%Y") %></td>
@@ -172,37 +163,11 @@
 
 <% end %>
 
-<!--
-= render '/setups/leave_balance'
-%h2 Employee's DashBoard
-%h4 Leaves Pending for Approval:-
-%table
-  %tr
-    %th Applied_on
-    %th No_of_Days
-    %th Start_date
-    %th End_date
-    %th Current_status
-    - if current_user.role == "manager"
-      %th Employee
-      %th Action
-
-   - @leaves.each do |leave|
-    - if leave.current_status == "Pending"
-      %tr
-        %td= leave.created_at.strftime("%d-%m-%Y")
-        %td= leave.no_of_days
-        %td= leave.start_date
-        %td= leave.end_date
-        %td= leave.current_status
-        - if current_user.role == 'manager'
-          %td= leave.user.email
-          %td= link_to 'Approve/Reject', approve_reject_leave_path(:id => leave.id, :user_id => leave.user.id)
-= render 'form'
--->
 <script type="text/javascript">
   $(document).ready(function() {
       $(".span3").css({position: "fixed"});
+      $(".span9").css({position:"relative",left:"180px"});
+      $("#hr1").css({height:"20px"});
   });
 </script>
 

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
  <head>
 
@@ -22,28 +21,19 @@
       </a>
       <a class="brand" href="#">Cube Root LTS</a>
       <div class="nav-collapse">
-      <!-- <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#holidays_index_path">Holiday List</a></li>
-        </ul> -->
-        <!--/.nav-collapse -->
-        <div id="user_nav" class="pull-right">
+        <div id="user_nav" class="pull-right" style="font-size:17px">
           <% if user_signed_in? %>
             Signed in as <%= current_user.email %>. Not you?
             <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
             <% if current_user.role == 'manager' or current_user.role == 'employee' %>
               <%= label_tag 'Year' %>
               <%= session[:current_year] %>
-              <!--- %= link_to 'Change Year', change_year_leave_path(current_user.id) % -->
-           
-              <%= form_tag('/leaves/set_year' ,:style => "margin:0;padding:0;display:inline;")   do  %>
+              <%= form_tag('/leaves/set_year' )   do  %>
                 <div class="span4">
                   <%= select_year(Date.today) %>
                   <%= button_to "set",:controller => "/leaves", :action => "set_year" %>
                 </div>
              <%end%>
-           
-
             <% end %>
           <% else %>
             <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
@@ -78,3 +68,8 @@
 
 </body>
 </html>
+<script type="text/javascript">
+  $(document).ready(function() {
+      $(".span4").css({position: "relative",left:"180px",top:"-20px"});
+  });
+</script>

@@ -60,15 +60,7 @@ class LeavesController < ApplicationController
 
   # returns all leaves associated with user
   def index
-    if current_user.role == 'manager'
-      @leaves = find_leave_by_id_year
-    else
-      @leaves = find_leave_by_id_year
-    end
-#    @leaves_taken = Leave.where(['user_id = ? and current_status = ? and
-#                                 year(start_date) = ?',
-#                                 current_user.id, "Approved",
-#                                 session[:current_year]]).sum(:no_of_days)
+    @leaves = find_leave_by_id_year
 
     @leaves_taken = Leave.where(['user_id = ? and current_status in("Approved", "Pending") and
                                  year(start_date) = ?',

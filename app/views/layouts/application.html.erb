@@ -29,10 +29,10 @@
               <%= label_tag 'Year' %>
               <%= session[:current_year] %>
               <%= form_tag('/leaves/set_year' )   do  %>
-                <div class="span4">
+                <div class="span4" >
                   <%= select_year(Date.today) %>
                   <%= button_to "set",:controller => "/leaves", :action => "set_year" %>
-                </div>
+                </div >
              <%end%>
             <% end %>
           <% else %>
@@ -72,4 +72,4 @@
   $(document).ready(function() {
       $(".span4").css({position: "relative",left:"180px",top:"-20px"});
   });
-</script>
+</script -->

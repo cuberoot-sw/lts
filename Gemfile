@@ -24,6 +24,8 @@ group :assets do
 end
 gem 'date_validator'
 gem 'jquery-rails'
+gem "pg", "~> 0.14.1"
+gem 'activerecord-postgresql-adapter'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

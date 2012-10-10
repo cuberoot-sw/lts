@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608065438) do
+ActiveRecord::Schema.define(:version => 20120924051732) do
 
   create_table "holidays", :force => true do |t|
-    t.datetime "date"
+    t.date     "date"
     t.string   "event"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(:version => 20120608065438) do
 
   create_table "leaves", :force => true do |t|
     t.integer  "user_id",          :null => false
-    t.datetime "applied_on"
     t.datetime "start_date"
     t.datetime "end_date"
     t.integer  "no_of_days"
@@ -37,6 +36,16 @@ ActiveRecord::Schema.define(:version => 20120608065438) do
 
   add_index "leaves", ["user_id"], :name => "index_leaves_on_user_id"
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
   create_table "setups", :force => true do |t|
     t.integer  "total_leaves"
     t.integer  "year"
@@ -45,20 +54,33 @@ ActiveRecord::Schema.define(:version => 20120608065438) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                                 :default => "",           :null => false
+    t.string   "encrypted_password",                    :default => "",           :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",                         :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "role"
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.string   "role",                                  :default => "employee"
     t.string   "name"
+    t.float    "total_leaves"
+    t.date     "joining_date",                          :default => '2012-01-01'
+    t.integer  "manager_id"
+    t.integer  "phone_number",             :limit => 8
+    t.integer  "emergency_phone_number",   :limit => 8
+    t.string   "emergency_contact_person"
+    t.integer  "alternate_phone_number",   :limit => 8
+    t.string   "blood_group"
+    t.string   "official_email_id"
+    t.string   "alternate_email_id"
+    t.date     "date_of_birth"
+    t.string   "local_address"
+    t.string   "permanent_address"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

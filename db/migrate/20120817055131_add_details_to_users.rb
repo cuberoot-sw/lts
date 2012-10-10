@@ -3,7 +3,7 @@ class AddDetailsToUsers < ActiveRecord::Migration
     add_column :users, :phone_number, :integer
     add_column :users, :emergency_phone_number, :integer
     add_column :users, :emergency_contact_person, :string
-    add_column :users, :alernate_phone_number, :integer
+    add_column :users, :alternate_phone_number, :integer
     add_column :users, :blood_group, :string
     add_column :users, :official_email_id, :string
     add_column :users, :alternate_email_id, :string
@@ -16,7 +16,7 @@ class AddDetailsToUsers < ActiveRecord::Migration
     remove_column :users, :phone_number
     remove_column :users, :emergency_phone_number
     remove_column :users, :emergency_contact_person
-    remove_column :users, :alernate_phone_number
+    remove_column :users, :alternate_phone_number
     remove_column :users, :blood_group
     remove_column :users, :official_email_id
     remove_column :users, :alternate_email_id

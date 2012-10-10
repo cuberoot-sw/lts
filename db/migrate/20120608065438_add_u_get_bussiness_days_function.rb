@@ -68,12 +68,21 @@ class AddUGetBussinessDaysFunction < ActiveRecord::Migration
           END WHILE;
 
           SELECT count(BussinessDays) INTO l_count FROM _tblBussinessDays;
-          return l_count ;
+          return l_count;
           END
         "
       end
   end
 
   def down
+        case ActiveRecord::Base.connection
+      when ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
+          connection.execute(%q{
+             drop function uGetBussinessDays(DATE, DATE)
+           $$ language plpgsql;
+          })
+      when ActiveRecord::ConnectionAdapters::MySQLAdapter
+        execute "drop function `uGetBussinessDays`(DATE,DATE);"
+      end
   end
 end

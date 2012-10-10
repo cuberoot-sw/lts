@@ -62,14 +62,23 @@ class LeavesController < ApplicationController
   def index
     @leaves = find_leave_by_id_year
 
-    @leaves_taken = Leave.where(['user_id = ? and current_status in("Approved", "Pending") and
-                                 year(start_date) = ?',
-                                 current_user.id,
+    @leaves_taken = Leave.where(['user_id = ? and current_status in(?, ?) and
+                                 extract(year from start_date) = ?',
+                                 current_user.id,'Approved', 'Pending',
                                  session[:current_year]]).sum(:no_of_days)
+
+
+#    @leaves_taken = Leave.where(['user_id = ? and current_status in("Approved", "Pending") and
+#                                 year(start_date) = ?',
+#                                 current_user.id,
+#                                 session[:current_year]]).sum(:no_of_days)
 
     @setups = Setup.select("total_leaves").where(year: session[:current_year])
     @users = User.find(:all, conditions: ['id = ?' ,
-                                          "#{current_user.manager_id}%"])
+                                          "current_user.manager_id"])
+#        @users = User.find(:all, conditions: ['id = ?' ,
+#                                          "#{current_user.manager_id}%"])
+
   end
 
   # displays applied leave
@@ -107,9 +116,14 @@ class LeavesController < ApplicationController
   protected
   def find_leave_by_id_year
     Leave.find(:all, conditions: ['user_id = ? and
-                                              year(start_date) = ?',
+                                            extract(year from start_date) = ?',
                                               current_user.id,
                                               session[:current_year]])
-  end
 
+#         Leave.find(:all, conditions: ['user_id = ? and
+#                                             year(start_date) = ?',
+#                                              current_user.id,
+#                                              session[:current_year]])
+
+  end
  end

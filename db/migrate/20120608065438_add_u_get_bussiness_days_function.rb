@@ -3,14 +3,14 @@ class AddUGetBussinessDaysFunction < ActiveRecord::Migration
     case ActiveRecord::Base.connection
       when ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
           connection.execute(%q{
-          CREATE function uGetBussinessDays(in_sDate DATE,
-           in_eDate DATE) RETURNS VARCHAR(100) AS $$
+          CREATE function uGetBussinessDays(in_sdate DATE,
+           in_edate DATE) RETURNS VARCHAR(100) AS $$
            DECLARE
             l_count INT;
-            l_sDate DATE;
+            l_sdate DATE;
 
            BEGIN
-            SET l_sDate = in_sDate;
+            l_sdate = in_sdate;
 
             CREATE TEMPORARY TABLE IF NOT EXISTS _tblBussinessDays(BussinessDays date);
             CREATE TEMPORARY TABLE IF NOT EXISTS _tblHolidaysDays(Offdays date);
@@ -18,17 +18,17 @@ class AddUGetBussinessDaysFunction < ActiveRecord::Migration
              delete from _tblBussinessDays;
              delete from _tblHolidaysDays;
 
-             WHILE l_sDate <= in_eDate LOOP
+             WHILE l_sdate <= in_edate LOOP
 
-              IF (DAYNAME(l_sDate) = 'Sunday' ) THEN
-                 INSERT INTO _tblHolidaysDays VALUES(l_sDate);
-              ELSIF ( DAYNAME(l_sDate) = 'Saturday' ) THEN
-                 INSERT INTO _tblHolidaysDays VALUES(l_sDate);
+              IF (to_char(l_sdate, 'day') = 'Sunday' ) THEN
+                 INSERT INTO _tblHolidaysDays VALUES(l_sdate);
+              ELSIF ( to_char(l_sdate, 'day') = 'Saturday' ) THEN
+                 INSERT INTO _tblHolidaysDays VALUES(l_sdate);
               ELSE
-                 INSERT INTO _tblBussinessDays VALUES(l_sDate);
+                 INSERT INTO _tblBussinessDays VALUES(l_sdate);
               END IF;
 
-               l_sDate = l_sDate + "1 day";
+               l_sdate = l_sdate + '1 day'::INTERVAL;
 
              END LOOP;
 
@@ -79,7 +79,6 @@ class AddUGetBussinessDaysFunction < ActiveRecord::Migration
       when ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
           connection.execute(%q{
              drop function uGetBussinessDays(DATE, DATE)
-           $$ language plpgsql;
           })
       when ActiveRecord::ConnectionAdapters::MySQLAdapter
         execute "drop function `uGetBussinessDays`(DATE,DATE);"

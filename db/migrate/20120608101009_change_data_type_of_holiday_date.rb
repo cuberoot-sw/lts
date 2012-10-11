@@ -10,7 +10,7 @@ class ChangeDataTypeOfHolidayDate < ActiveRecord::Migration
       when ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
           connection.execute(%q{
              alter table holidays
-             alter column date type timestamp without time zone using to_timestamp(date)
+             alter column date type timestamp without time zone
           })
       when ActiveRecord::ConnectionAdapters::MySQLAdapter
         change_table :holidays do |t|

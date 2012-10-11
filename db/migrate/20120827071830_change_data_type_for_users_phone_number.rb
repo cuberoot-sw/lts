@@ -16,7 +16,7 @@ class ChangeDataTypeForUsersPhoneNumber < ActiveRecord::Migration
         case ActiveRecord::Base.connection
       when ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
         connection.execute(%q{
-          ALTER TABLE users ALTER phone_number TYPE INTEGER
+
         })
       when ActiveRecord::ConnectionAdapters::MySQLAdapter
         execute <<-SQL

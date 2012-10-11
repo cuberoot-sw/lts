@@ -5,9 +5,15 @@ class HolidaysController < ApplicationController
   def index
     @holidays_by_year = Holiday.yeardate
     if params[:commit] == "set"
-      @holidays_by_year = Holiday.find(:all, conditions: \
-                                       ['year(date) = ?',
-                                        params[:date][:year]])
+      if ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+        @holidays_by_year = Holiday.find(:all, conditions: \
+                                         ['extract(year from date) = ?',
+                                          params[:date][:year]])
+      elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::MySQLAdapter)
+        @holidays_by_year = Holiday.find(:all, conditions: \
+                                          ['year(date) = ?',
+                                          params[:date][:year]])
+      end
     end
   end
 

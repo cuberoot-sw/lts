@@ -10,9 +10,8 @@ class Holiday < ActiveRecord::Base
 
   # while inserting holiday, it should not be on weekends
   def holiday_cannot_be_on_weekends
-    if (self.date.strftime("%u") == "6" or self.date.strftime("%u") == "7")
-      errors.add(:date, "Holiday should not be on weekends")
-    end
+      if (self.date.cwday == 6 or self.date.cwday == 7)
+        errors.add(:date, "Holiday should not be on weekends")
+      end
   end
-
 end

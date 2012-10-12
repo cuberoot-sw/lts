@@ -15,8 +15,7 @@ class ChangeYearTypeSetups < ActiveRecord::Migration
     case ActiveRecord::Base.connection
       when ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
           connection.execute(%q{
-             alter table setups
-             alter column year type timestamp without time zone
+
           })
       when ActiveRecord::ConnectionAdapters::MySQLAdapter
           change_column :setups, :year, :datetime

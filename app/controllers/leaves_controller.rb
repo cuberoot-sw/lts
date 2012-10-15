@@ -61,7 +61,7 @@ class LeavesController < ApplicationController
                                                        extract(year from start_date) = ?',
                                                     current_user.id,'Approved', 'Pending',
                                                  session[:current_year]]).sum(:no_of_days)
-    elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::MySQLAdapter)
+    elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
     @leaves_taken = Leave.where(['user_id = ? and current_status in("Approved", "Pending") and
                                  year(start_date) = ?',
                                  current_user.id,
@@ -73,7 +73,7 @@ class LeavesController < ApplicationController
     if ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
       @users = User.find(:all, conditions: ['id = ?' ,
                                           "#{current_user.manager_id.to_i}"])
-    elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::MySQLAdapter)
+    elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
       @users = User.find(:all, conditions: ['id = ?' ,
                                           "#{current_user.manager_id}%"])
     end
@@ -118,7 +118,7 @@ class LeavesController < ApplicationController
                                             extract(year from start_date) = ?',
                                               current_user.id,
                                               session[:current_year]])
-    elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::MySQLAdapter)
+    elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
       Leave.find(:all, conditions: ['user_id = ? and
                                              year(start_date) = ?',
                                               current_user.id,

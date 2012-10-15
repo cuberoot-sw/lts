@@ -8,7 +8,7 @@ class Holiday < ActiveRecord::Base
 
   if ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
     scope :yeardate, conditions: ['extract(year from date) = ?', Time.now.year]
-  elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::MySQLAdapter)
+  elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
     scope :yeardate, conditions: ['year(date) = ?', Time.now.year]
   end
 

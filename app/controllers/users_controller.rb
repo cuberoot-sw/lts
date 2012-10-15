@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 
   before_filter :find_user, only: [:edit, :show, :update]
 
-  #returns all users list
   def index
     @users = User.all
       respond_to do |format|
@@ -10,11 +9,9 @@ class UsersController < ApplicationController
     end
   end
 
- # edit user details
   def edit
   end
 
-  # update user details and saves updated details
   def update
     @setup = Setup.setupbyyear
     if params[:commit] == "Change"
@@ -31,14 +28,12 @@ class UsersController < ApplicationController
     end
   end
 
-  # shows user details
   def show
     respond_to do |format|
       format.html
     end
   end
 
-  # returns all users except admin
   def user_management
     @users = User.non_admins
     respond_to do |format|

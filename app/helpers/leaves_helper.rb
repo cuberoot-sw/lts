@@ -1,10 +1,7 @@
 module LeavesHelper
   def leaves_index_helper
-    if current_user.role == 'manager'
-      @leaves = find_leave_by_id_year
-    else
-      @leaves = find_leave_by_id_year
-    end
+    @leaves = find_leave_by_id_year
+
     if ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
     @leaves_taken = Leave.where(['user_id = ? and current_status = ? and
                                  extract(year from start_date) = ?',

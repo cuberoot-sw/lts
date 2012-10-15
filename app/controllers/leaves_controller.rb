@@ -1,7 +1,6 @@
 class LeavesController < ApplicationController
   before_filter :find_leave_by_id, only: [:edit, :update, :show]
 
-  # creates new leave and saves it.
   def create
     @leave = current_user.leaves.build(params[:leave])
     @leave.current_status = "Pending"
@@ -17,7 +16,6 @@ class LeavesController < ApplicationController
     end
   end
 
-  # new leave entry
   def new
     @leave = Leave.new
     respond_to do |format|
@@ -25,7 +23,6 @@ class LeavesController < ApplicationController
     end
   end
 
-  # updates leave details and saves updates leave details
   def update
     if params[:commit] == "Approve"
       @leave.current_status = "Approved"
@@ -44,13 +41,11 @@ class LeavesController < ApplicationController
         format.html { redirect_to leave_path(@leave),
                       notice: 'Leave is successfully updated.' }
       else
-        debugger
         format.html { render "edit" }
       end
     end
   end
 
-  # delete applied leave
   def destroy
     @leave = Leave.find_by_id(params[:id])
     @leave.destroy
@@ -58,16 +53,11 @@ class LeavesController < ApplicationController
     redirect_to action: 'index', id: session[:user_id]
   end
 
-  # returns all leaves associated with user
   def index
     @leaves = find_leave_by_id_year
 
-    @leaves_taken = Leave.where(['user_id = ? and current_status in(?, ?) and
-                                 extract(year from start_date) = ?',
-                                 current_user.id,'Approved', 'Pending',
-                                 session[:current_year]]).sum(:no_of_days)
     if ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
-               @leaves_taken = Leave.where(['user_id = ? and current_status in(?, ?) and
+    @leaves_taken = Leave.where(['user_id = ? and current_status in(?, ?) and
                                                        extract(year from start_date) = ?',
                                                     current_user.id,'Approved', 'Pending',
                                                  session[:current_year]]).sum(:no_of_days)
@@ -90,7 +80,6 @@ class LeavesController < ApplicationController
 
   end
 
-  # displays applied leave
   def show
     respond_to do |format|
       format.html
@@ -125,12 +114,12 @@ class LeavesController < ApplicationController
   protected
   def find_leave_by_id_year
     if ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
-    Leave.find(:all, conditions: ['user_id = ? and
+      Leave.find(:all, conditions: ['user_id = ? and
                                             extract(year from start_date) = ?',
                                               current_user.id,
                                               session[:current_year]])
     elsif ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::MySQLAdapter)
-         Leave.find(:all, conditions: ['user_id = ? and
+      Leave.find(:all, conditions: ['user_id = ? and
                                              year(start_date) = ?',
                                               current_user.id,
                                               session[:current_year]])

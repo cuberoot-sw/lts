@@ -4,7 +4,6 @@ class SetupsController < ApplicationController
     @setups = Setup.all
   end
 
-  # displays setup
   def show
     @setup = Setups.find(params[:id])
     respond_to do |format|
@@ -12,7 +11,6 @@ class SetupsController < ApplicationController
     end
   end
 
-  # create new setup
   def new
     @setup = Setup.new
     respond_to do |format|
@@ -20,12 +18,10 @@ class SetupsController < ApplicationController
     end
   end
 
-  # edit existing setup
   def edit
     @setup = Setup.find(params[:id])
   end
 
-  # update setup details and saves updated details
   def update
     @setup = Setup.find(params[:id])
     respond_to do |format|
@@ -38,7 +34,6 @@ class SetupsController < ApplicationController
     end
   end
 
-  # creates new setup entry and if it valids saves it.
   def create
     @setup = Setup.new(params[:setup])
 
@@ -52,7 +47,6 @@ class SetupsController < ApplicationController
     end
   end
 
-  # delete existing setup
   def destroy
     @setup = Setup.find_by_id(params[:id])
     @setup.destroy

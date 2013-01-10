@@ -47,6 +47,6 @@ CMD
 end
 
 after 'deploy:update_code' do
-  run "cd #{release_path}  && ln -nsf #{shared_path}/config/production_config.yml #{release_path}/config/production_config.yml"
-  run "cd #{release_path}  && ln -nsf #{shared_path}/config/config.yml #{release_path}/config/config.yml"
+  #run "cd #{release_path}  && ln -nsf #{shared_path}/config/production_config.yml #{release_path}/config/production_config.yml"
+  run "cd #{release_path}  && ln -nsf #{shared_path}/config/database.yml #{release_path}/config/database.yml"
 end

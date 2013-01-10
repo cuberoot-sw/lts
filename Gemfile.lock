@@ -100,6 +100,11 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby_core_source (>= 0.1.4)
+    ruby-debug-base19x (0.11.29)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      rake (>= 0.8.1)
+      ruby_core_source (>= 0.1.4)
     ruby-debug19 (0.11.6)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -143,8 +148,10 @@ DEPENDENCIES
   haml
   hpricot
   jquery-rails
+  linecache19
   mysql2
   rails (= 3.2.2)
+  ruby-debug-base19x
   ruby-debug19
   ruby_parser
   sass-rails (~> 3.2.3)

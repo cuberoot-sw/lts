@@ -35,7 +35,10 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: mysql2
+  database: cuberoot_lts
+  user: root
+  password: a
   pool: 5
   timeout: 5000
+  

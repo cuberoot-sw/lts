@@ -1,8 +1,9 @@
-## Leave Tracking System:
+## Leave Tracking System
 LTS is a ruby-on-rails application for tracking leaves and managing the Holidays; in an organization.
 
 ## Features Supported
 Roles : admin, employee, manager
+
 1. Admin features
   - Edit the 'holiday-list'
   - Change the role of any employee.

@@ -5,8 +5,8 @@ class ChangeDataTypeForUsersEmergencyPhoneNumber < ActiveRecord::Migration
         connection.execute(%q{
           ALTER TABLE users ALTER emergency_phone_number TYPE BIGINT
         })
-      when ActiveRecord::ConnectionAdapters::MySQLAdapter
-        execute <<-SQL
+      when ActiveRecord::ConnectionAdapters::Mysql2Adapter
+      execute <<-SQL
           ALTER TABLE users CHANGE emergency_phone_number
           emergency_phone_number BIGINT(20)
         SQL
@@ -19,7 +19,7 @@ class ChangeDataTypeForUsersEmergencyPhoneNumber < ActiveRecord::Migration
         connection.execute(%q{
 
         })
-      when ActiveRecord::ConnectionAdapters::MySQLAdapter
+      when ActiveRecord::ConnectionAdapters::Mysql2Adapter
         execute <<-SQL
           ALTER TABLE users CHANGE emergency_phone_number
           emergency_phone_number INT(11)

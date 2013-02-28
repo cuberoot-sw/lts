@@ -37,7 +37,7 @@ class AddUGetBussinessDaysFunction < ActiveRecord::Migration
            END;
            $$ language plpgsql;
           })
-      when ActiveRecord::ConnectionAdapters::MySQLAdapter
+      when ActiveRecord::ConnectionAdapters::Mysql2Adapter
         execute "
           CREATE function `uGetBussinessDays`(in_sDate DATE,
            in_eDate DATE) RETURNS VARCHAR(100)
@@ -80,7 +80,7 @@ class AddUGetBussinessDaysFunction < ActiveRecord::Migration
           connection.execute(%q{
              drop function uGetBussinessDays(DATE, DATE)
           })
-      when ActiveRecord::ConnectionAdapters::MySQLAdapter
+      when ActiveRecord::ConnectionAdapters::Mysql2Adapter
         execute "drop function `uGetBussinessDays`(DATE,DATE);"
       end
   end

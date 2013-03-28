@@ -25,6 +25,15 @@ end
 gem 'date_validator'
 gem 'jquery-rails'
 gem "pg", "~> 0.14.1"
+gem "rails_best_practices"
+
+group :test, :development do
+  gem "rspec-rails", "~> 2.0"
+  gem "rspec"
+  gem "rspec-core"
+  gem "rspec-expectations"
+  gem "rspec-mocks"
+end
 #gem 'activerecord-postgresql-adapter'
 
 # To use ActiveModel has_secure_password

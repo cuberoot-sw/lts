@@ -3,7 +3,7 @@
 <% end %>
 
 <h2>Employee's DashBoard:-</h2>
-<table>
+<table class="table table-bordered">
   <caption>Pending Leaves of <%= current_user.email %></caption>
   <tr>
     <th>Applied_on</th>
@@ -21,7 +21,7 @@
 <hr />
 <br />
 
-<table>
+<table class="table table-bordered">
   <caption>Rejected Leaves of <%= current_user.email %></caption>
   <tr>
     <th>Applied_on</th>
@@ -36,7 +36,7 @@
 <br />
 <hr />
 <br />
-<table>
+<table class="table table-bordered">
   <caption>Approved Leaves of <%= current_user.email %></caption>
   <tr>
     <th>Applied_on</th>
@@ -60,7 +60,7 @@
   <hr id="hr1"/> 
 </div>
 <% if current_user.role == 'manager' %>
-  <table>
+  <table class="table table-bordered">
     <caption>Pending leaves of employees</caption>
     <tr>
       <th>Applied_on</th>
@@ -97,7 +97,7 @@
 <hr />
 <br />
 
-<table>
+<table class="table table-bordered">
   <caption>Approved Leaves of employees</caption>
   <tr>
     <th>Applied_on</th>
@@ -132,7 +132,7 @@
 <hr />
 <br />
 
-<table>
+<table class="table table-bordered">
   <caption>Rejected Leaves of employees</caption>
   <tr>
     <th>Applied_on</th>

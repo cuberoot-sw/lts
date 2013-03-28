@@ -49,4 +49,8 @@ end
 # gem 'capistrano'
 
 # To use debugger
-gem 'ruby-debug19', :require => 'ruby-debug'
+# group :development do
+#   gem 'linecache19'
+#   gem "ruby-debug-base19x", "~> 0.11.30.pre"
+#   gem 'ruby-debug19', :require => 'ruby-debug'
+# end

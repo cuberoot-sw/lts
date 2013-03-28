@@ -12,7 +12,7 @@ class ChangeDataTypeOfHolidayDate < ActiveRecord::Migration
              alter table holidays
              alter column date type timestamp without time zone
           })
-      when ActiveRecord::ConnectionAdapters::MySQLAdapter
+      when ActiveRecord::ConnectionAdapters::Mysql2Adapter
         change_table :holidays do |t|
           t.change :date, :datetime
         end

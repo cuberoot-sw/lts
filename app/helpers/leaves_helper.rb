@@ -38,4 +38,8 @@ module LeavesHelper
                                               session[:current_year]])
     end
   end
+
+  def leave_types
+    options_for_select([["Sick Leave", "Sick Leave"], ["Vacation", "Vacation"]])
+  end
 end

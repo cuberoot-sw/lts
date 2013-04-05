@@ -4,7 +4,8 @@
    <title>CuberootLts</title>
 
   <%= stylesheet_link_tag    "bootstrap.min", "lts","jquery-ui-1.8.23.custom", media: "all" %>
-  <%= javascript_include_tag "application","jquery-1.7.2.min","jquery-ui-1.8.23.custom.min" %>
+  <%= javascript_include_tag "application","jquery-1.7.2.min","jquery-ui-1.8.23.custom.min", "prototype" %>
+  <script type="text/coffeescript" src="/assets/users.js.coffee"></script>
   <%= csrf_meta_tags %>
   <h1>Cube Root Lts.</h1>
   <hr />
@@ -19,7 +20,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="#">Cube Root LTS</a>
+      <% if user_signed_in? %>
+        <% if current_user.role == 'admin' %>
+          <a class="brand" href="http://localhost:3000/users/<%=current_user.id%>/user_management">Cube Root LTS</a>
+        <% elsif current_user.role == 'employee' or current_user.role == 'manager' %>
+          <a class="brand" href="http://localhost:3000/leaves">Cube Root LTS</a>
+        <% end %>
+      <% else %>
+        <a class="brand" href="">Cube Root LTS</a>
+      <% end %>
       <div class="nav-collapse">
         <div id="user_nav" class="pull-right" style="font-size:17px">
           <% if user_signed_in? %>
@@ -69,7 +78,8 @@
 </body>
 </html>
 <script type="text/javascript">
-  $(document).ready(function() {
-      $(".span4").css({position: "relative",left:"180px",top:"-20px"});
+  var $j = jQuery.noConflict();
+  $j(document).ready(function() {
+      $j(".span4").css({position: "relative",left:"180px",top:"-20px"});
   });
 </script>

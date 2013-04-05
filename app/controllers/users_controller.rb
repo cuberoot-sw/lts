@@ -10,6 +10,14 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.find_by_id(params[:id])
+    @managers = User.managers
+    @valid_managers_email = Array.new
+    @managers.each do |manager|
+      if manager.email != @user.email
+        @valid_managers_email << manager.email
+      end
+    end
   end
 
   def update
@@ -50,5 +58,15 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
+  end
+
+  def find_user_emails
+    @response
+    @user = User.find_by_email(params[:email])
+    if @user.blank? || @user.nil?
+      @response = "User not found"
+    else
+      @response = "User found"
+    end
   end
 end

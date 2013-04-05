@@ -1,19 +1,19 @@
 %p#notice
 = notice
 %p
-  %b Applied_On
+  %b Applied On
   =l @leave.created_at
 %p
-  %b start_date
+  %b Start Date
   =l @leave.start_date
 %p
-  %b end_date
+  %b End Date
   = @leave.end_date
 %p
-  %b no_of_days
+  %b No of Days
   = @leave.no_of_days
 %p
-  %b current_status
+  %b Current Status
   = @leave.current_status
 %p
   = link_to 'Back', leaves_path

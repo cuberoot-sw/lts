@@ -55,7 +55,8 @@ class LeavesController < ApplicationController
 
   def index
     @leaves = find_leave_by_id_year
-
+    @manager = User.find_by_id(current_user.manager_id)
+    @manager_email = @manager.blank? ? "" : @manager.email
     if ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
     @leaves_taken = Leave.where(['user_id = ? and current_status in(?, ?) and
                                                        extract(year from start_date) = ?',

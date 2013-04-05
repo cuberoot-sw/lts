@@ -193,10 +193,11 @@
 <%end%>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-      $(".span3").css({position: "fixed"});
-      $(".span9").css({position:"relative",left:"180px"});
-      $("#hr1").css({height:"20px"});
+  var $j = jQuery.noConflict();
+  $j(document).ready(function() {
+      $j(".span3").css({position: "fixed"});
+      $j(".span9").css({position:"relative",left:"180px"});
+      $j("#hr1").css({height:"20px"});
       });
 </script>
 

@@ -3,9 +3,12 @@
 <%= form_for @user,url: second_step_registrations_path do |f| %>
   <%= devise_error_messages! %>
   <div id="errorDiv_id"></div>
-  <div><%= f.label :email %>
-    <%= f.email_field :email %></div>
-  <div id="error_email"></div>
+  <div><%= f.label :email %>  
+  <%= f.email_field :email %>
+    <div id="error_email"></div>
+   	<label for="email">(e.g. abc@cuberoot.in)</label>
+  </div>
+
 
   <div><%= f.label :phone_number %>
     <%= f.text_field :phone_number %></div>
@@ -14,7 +17,6 @@
    <div><%= f.label :emergency_phone_number %>
       <%= f.text_field :emergency_phone_number %></div>
      <div id="error_emergency_phone_number"></div>
-
 
      <div><%= f.label :emergency_contact_person %>
      <%= f.text_field :emergency_contact_person %></div>
@@ -41,7 +43,7 @@
 
 
 <script type="text/javascript">
-
+var $j = jQuery.noConflict();
   var ck_phone_number = /^[0-9 ]{10,10}$/;
   var ck_emergency_phone_number = /^[0-9 ]{10,10}$/;
   var ck_emergency_contact_person = /^[a-z]$/;
@@ -52,155 +54,173 @@
 
   // Validations on focus out from the text fields
 
-  $("#user_phone_number").focusout(function() {
-      var phone_number = $('#user_phone_number').val();
+  $j("#user_phone_number").focusout(function() {
+      var phone_number = $j('#user_phone_number').val();
       if (!ck_phone_number.test(phone_number)) {
-        $("#error_phone_number").css('color','red');
-        $("#error_phone_number").text(" Enter 10 digit phone number ");
-        $("#user_phone_number").css('border-color', 'red');
+        $j("#error_phone_number").css('color','red');
+        $j("#error_phone_number").text(" Enter 10 digit phone number ");
+        $j("#user_phone_number").css('border-color', 'red');
       }
       if (ck_phone_number.test(phone_number)) {
-        $("#error_phone_number").text(" ");
-        $("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $j("#error_phone_number").text(" ");
+        $j("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
       }
-  });
+      });
 
-  $("#user_emergency_phone_number").focusout(function() {
-      var emergency_phone_number = $('#user_emergency_phone_number').val();
+    $j("#user_email").focusout(function(){
+        var user_email_val = $j('#user_email').val();
+        new Ajax.Request("/users/find_user_emails", {
+                              method: 'get',
+                              parameters: { "email": user_email_val },
+                              onSuccess: function(res){
+                               if(res.responseText != "User not found\n\n") {
+                                 $j("#user_email").css('border-color','red');
+                                 $j("#error_email").css('color','red');
+                                 $j("#error_email").text('Email already in use.Please select some other email');
+                               } else {
+                                 $j("#user_email").css('border-color','rgba(82, 168, 236, 0.8)');
+                                 $j("#error_email").text(' ');
+                             }
+                           }
+        });
+    });
+
+  $j("#user_emergency_phone_number").focusout(function() {
+      var emergency_phone_number = $j('#user_emergency_phone_number').val();
       if (!ck_emergency_phone_number.test(emergency_phone_number)) {
-        $("#error_emergency_phone_number").css('color','red');
-        $("#error_emergency_phone_number").text("Enter 10 digit emergency phone number");
-        $("#user_emergency_phone_number").css('border-color', 'red');
+        $j("#error_emergency_phone_number").css('color','red');
+        $j("#error_emergency_phone_number").text("Enter 10 digit emergency phone number");
+        $j("#user_emergency_phone_number").css('border-color', 'red');
       }
       if (ck_emergency_phone_number.test(emergency_phone_number)) {
-        $("#error_emergency_phone_number").text(" ");
-        $("#user_emergency_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $j("#error_emergency_phone_number").text(" ");
+        $j("#user_emergency_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
       }
 
   });
 
-  $("#user_emergency_contact_person").focusout(function() {
-      var emergency_contact_person = $('#user_emergency_contact_person').val();
+  $j("#user_emergency_contact_person").focusout(function() {
+      var emergency_contact_person = $j('#user_emergency_contact_person').val();
  /*     if (!ck_emergency_phone_number.test(emergency_phone_number)) {
-         $("#error_emergency_phone_number").text("Enter 10 digit emergency phone number");
+         $j("#error_emergency_phone_number").text("Enter 10 digit emergency phone number");
       }
       if (ck_emergency_phone_number.test(emergency_phone_number)) {
-          $("#error_emergency_phone_number").text(" ");
+          $j("#error_emergency_phone_number").text(" ");
       }
 
-      $("#error_emergency_contact_person").text("focusout fired: "); */
+      $j("#error_emergency_contact_person").text("focusout fired: "); */
   });
 
-  $("#user_alternate_phone_number").focusout(function() {
-     var alternate_phone_number = $('#user_alternate_phone_number').val();
+  $j("#user_alternate_phone_number").focusout(function() {
+     var alternate_phone_number = $j('#user_alternate_phone_number').val();
      if (!ck_alternate_phone_number.test(alternate_phone_number)) {
-      $("#error_alternate_phone_number").css('color','red');
-      $("#error_alternate_phone_number").text("Enter 10 digit alternate phone number ");
-      $("#user_alternate_phone_number").css('border-color', 'red');
+      $j("#error_alternate_phone_number").css('color','red');
+      $j("#error_alternate_phone_number").text("Enter 10 digit alternate phone number ");
+      $j("#user_alternate_phone_number").css('border-color', 'red');
      }
 
      if (ck_alternate_phone_number.test(alternate_phone_number)) {
-       $("#error_alternate_phone_number").text(" ");
-       $("#user_alternate_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       $j("#error_alternate_phone_number").text(" ");
+       $j("#user_alternate_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
      }
   });
 
-  $("#user_official_email_id").focusout(function() {
-      var official_email_id = $('#user_official_email_id').val();
+  $j("#user_official_email_id").focusout(function() {
+      var official_email_id = $j('#user_official_email_id').val();
 
       if (!ck_official_email_id.test(official_email_id)) {
-        $("#error_official_email_id").css('color','red');
-        $("#error_official_email_id").text("Enter valid official email id");
-        $("#user_official_email_id").css('border-color', 'red');
+        $j("#error_official_email_id").css('color','red');
+        $j("#error_official_email_id").text("Enter valid official email id");
+        $j("#user_official_email_id").css('border-color', 'red');
       }
 
        if (ck_official_email_id.test(official_email_id)) {
-         $("#error_official_email_id").text(" ");
-         $("#user_official_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_official_email_id").text(" ");
+         $j("#user_official_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
   });
 
-  $("#user_alternate_email_id").focusout(function() {
-     var alternate_email_id = $('#user_alternate_email_id').val();
+  $j("#user_alternate_email_id").focusout(function() {
+     var alternate_email_id = $j('#user_alternate_email_id').val();
 
      if (!ck_alternate_email_id.test(alternate_email_id)) {
-       $("#error_alternate_email_id").css('color','red');
-       $("#error_alternate_email_id").text(" Enter valid alternate email id ");
-       $("#user_alternate_email_id").css('border-color', 'red');
+       $j("#error_alternate_email_id").css('color','red');
+       $j("#error_alternate_email_id").text(" Enter valid alternate email id ");
+       $j("#user_alternate_email_id").css('border-color', 'red');
      }
 
      if (ck_alternate_email_id.test(alternate_email_id)) {
-      $("#error_alternate_email_id").text(" ");
-      $("#user_alternate_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
+      $j("#error_alternate_email_id").text(" ");
+      $j("#user_alternate_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
      }
   });
 
 
-    $('#new_user').submit(function() {
+    $j('#new_user').submit(function() {
       var errors = "";
-      var phone_number = $('#user_phone_number').val();
-      var emergency_phone_number = $('#user_emergency_phone_number').val();
-      var emergency_contact_person = $('#user_emergency_contact_person').val();
-      var alternate_phone_number = $('#user_alternate_phone_number').val();
-      var official_email_id = $('#user_official_email_id').val();
-      var alternate_email_id = $('#user_alternate_email_id').val();
+      var phone_number = $j('#user_phone_number').val();
+      var emergency_phone_number = $j('#user_emergency_phone_number').val();
+      var emergency_contact_person = $j('#user_emergency_contact_person').val();
+      var alternate_phone_number = $j('#user_alternate_phone_number').val();
+      var official_email_id = $j('#user_official_email_id').val();
+      var alternate_email_id = $j('#user_alternate_email_id').val();
 
       if (!ck_phone_number.test(phone_number)) {
          errors += " error1";
-         $("#error_phone_number").css('color','red');
-         $("#error_phone_number").text(" Enter 10 digit phone number ");
-         $("#user_phone_number").css('border-color', 'red');
+         $j("#error_phone_number").css('color','red');
+         $j("#error_phone_number").text(" Enter 10 digit phone number ");
+         $j("#user_phone_number").css('border-color', 'red');
        }
        if (ck_phone_number.test(phone_number)) {
-         $("#error_phone_number").text(" ");
-         $("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_phone_number").text(" ");
+         $j("#user_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
 
        if (!ck_emergency_phone_number.test(emergency_phone_number)) {
          errors += "error2";
-         $("#error_emergency_phone_number").css('color','red');
-         $("#error_emergency_phone_number").text("Enter 10 digit emergency phone number ");
-         $("#user_emergency_phone_number").css('border-color', 'red');
+         $j("#error_emergency_phone_number").css('color','red');
+         $j("#error_emergency_phone_number").text("Enter 10 digit emergency phone number ");
+         $j("#user_emergency_phone_number").css('border-color', 'red');
        }
        if (ck_emergency_phone_number.test(emergency_phone_number)) {
-         $("#error_emergency_phone_number").text(" ");
-         $("#user_emergency_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_emergency_phone_number").text(" ");
+         $j("#user_emergency_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
 
        if (!ck_alternate_phone_number.test(alternate_phone_number)) {
          errors += "error3";
-         $("#error_alternate_phone_number").css('color','red');
-         $("#error_alternate_phone_number").text("Enter 10 digit alternate phone number ");
-         $("#user_alternate_phone_number").css('border-color', 'red');
+         $j("#error_alternate_phone_number").css('color','red');
+         $j("#error_alternate_phone_number").text("Enter 10 digit alternate phone number ");
+         $j("#user_alternate_phone_number").css('border-color', 'red');
        }
        if (ck_alternate_phone_number.test(alternate_phone_number)) {
-         $("#error_alternate_phone_number").text(" ");
-         $("#user_alternate_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_alternate_phone_number").text(" ");
+         $j("#user_alternate_phone_number").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
        if (!ck_official_email_id.test(official_email_id)) {
          errors += "error4";
-         $("#error_official_email_id").css('color','red');
-         $("#error_official_email_id").text("Enter valid official email id");
-         $("#user_official_email_id").css('border-color', 'red');
+         $j("#error_official_email_id").css('color','red');
+         $j("#error_official_email_id").text("Enter valid official email id");
+         $j("#user_official_email_id").css('border-color', 'red');
        }
        if (ck_official_email_id.test(official_email_id)) {
-         $("#error_official_email_id").text(" ");
-         $("#user_official_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_official_email_id").text(" ");
+         $j("#user_official_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
 
        if (!ck_alternate_email_id.test(alternate_email_id)) {
          errors += "error5";
-         $("#error_alternate_email_id").css('color','red');
-         $("#error_alternate_email_id").text(" Enter valid alternate email id ");
-         $("#user_alternate_email_id").css('border-color', 'red');
+         $j("#error_alternate_email_id").css('color','red');
+         $j("#error_alternate_email_id").text(" Enter valid alternate email id ");
+         $j("#user_alternate_email_id").css('border-color', 'red');
        }
        if (ck_alternate_email_id.test(alternate_email_id)) {
-         $("#error_alternate_email_id").text(" ");
-         $("#user_alternate_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_alternate_email_id").text(" ");
+         $j("#user_alternate_email_id").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
        if (errors.length > 0) {
@@ -211,9 +231,9 @@
     });
 
 
-    $('#bttn_next').click(function() {
+    $j('#bttn_next').click(function() {
   //    alert("In submit click");
-       $('#new_user').submit();
+       $j('#new_user').submit();
     });
 
 </script>

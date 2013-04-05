@@ -6,9 +6,11 @@
 
   <div><%= f.label :password %>
   <%= f.password_field :password %></div>
+  <div id="error_user_password"></div>
 
   <div><%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %></div>
+  <div id="error_user_password_confirmation"></div>
 
   <div><%= f.hidden_field :phone_number %></div>
 
@@ -84,198 +86,213 @@
 <% end %>
 
 <script type="text/javascript">
-
+var $j = jQuery.noConflict();
   var ck_english  = /^[A-Za-z]+$/;
   var ck_local_address_pincode = /^[0-9 ]{6,6}$/;
   var ck_pincode = /^[0-9 ]{6,6}$/;
   var ck_previous_click = false;
 
-  $('#user_date_of_birth').datepicker({maxDate: "0M",dateFormat: "yy-mm-dd" });
+  $j('#user_date_of_birth').datepicker({maxDate: "0M",dateFormat: "yy-mm-dd" });
 
   // Validations on focus out from the text fields
 
-    $("#user_local_address_city").focusout(function() {
-      var local_address_city = $("#user_local_address_city").val();
+    $j("#user_local_address_city").focusout(function() {
+      var local_address_city = $j("#user_local_address_city").val();
       if(!ck_english.test(local_address_city)) {
-       $("#error_local_address_city").css('color','red');
-       $("#error_local_address_city").text(" Enter valid city name");
-       $("#user_local_address_city").css('border-color', 'red');
+       $j("#error_local_address_city").css('color','red');
+       $j("#error_local_address_city").text(" Enter valid city name");
+       $j("#user_local_address_city").css('border-color', 'red');
       }
 
       if(ck_english.test(local_address_city)) {
-       $("#error_local_address_city").text(" ");
-       $("#user_local_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       $j("#error_local_address_city").text(" ");
+       $j("#user_local_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
       }
     });
 
-    $("#user_local_address_state").focusout(function() {
-      var local_address_state = $("#user_local_address_state").val();
+    $j("#user_local_address_state").focusout(function() {
+      var local_address_state = $j("#user_local_address_state").val();
       if(!ck_english.test(local_address_state)) {
-       $("#error_local_address_state").css('color','red');
-       $("#error_local_address_state").text(" Enter valid state name");
-       $("#user_local_address_state").css('border-color', 'red');
+       $j("#error_local_address_state").css('color','red');
+       $j("#error_local_address_state").text(" Enter valid state name");
+       $j("#user_local_address_state").css('border-color', 'red');
       }
 
       if(ck_english.test(local_address_state)) {
-       $("#error_local_address_state").text(" ");
-       $("#user_local_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       $j("#error_local_address_state").text(" ");
+       $j("#user_local_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
       }
     });
 
-    $("#user_local_address_pin_code").focusout(function() {
-      var local_address_pincode = $("#user_local_address_pin_code").val();
+    $j("#user_local_address_pin_code").focusout(function() {
+      var local_address_pincode = $j("#user_local_address_pin_code").val();
       if(!ck_pincode.test(local_address_pincode)) {
-       $("#error_local_address_pincode").css('color','red');
-       $("#error_local_address_pincode").text(" Enter valid pincode");
-       $("#user_local_address_pin_code").css('border-color', 'red');
+       $j("#error_local_address_pincode").css('color','red');
+       $j("#error_local_address_pincode").text(" Enter valid pincode");
+       $j("#user_local_address_pin_code").css('border-color', 'red');
       }
 
       if(ck_pincode.test(local_address_pincode)) {
-       $("#error_local_address_pincode").text(" ");
-       $("#user_local_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       $j("#error_local_address_pincode").text(" ");
+       $j("#user_local_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
       }
 
-      $("#user_local_address").val($('#user_local_address_city').val() + "," + $("#user_local_address_state").val() + "-" + $("#user_local_address_pin_code").val());
+      $j("#user_local_address").val($j('#user_local_address_city').val() + "," + $j("#user_local_address_state").val() + "-" + $j("#user_local_address_pin_code").val());
     });
 
-    $("#user_permanent_address_city").focusout(function() {
-      var permanent_address_city = $("#user_permanent_address_city").val();
+    $j("#user_permanent_address_city").focusout(function() {
+      var permanent_address_city = $j("#user_permanent_address_city").val();
       if(!ck_english.test(permanent_address_city)) {
-       $("#error_permanent_address_city").css('color','red');
-       $("#error_permanent_address_city").text(" Enter valid city name");
-       $("#user_permanent_address_city").css('border-color', 'red');
+       $j("#error_permanent_address_city").css('color','red');
+       $j("#error_permanent_address_city").text(" Enter valid city name");
+       $j("#user_permanent_address_city").css('border-color', 'red');
      }
 
       if(ck_english.test(permanent_address_city)) {
-         $("#error_permanent_address_city").text(" ");
-         $("#user_permanent_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_permanent_address_city").text(" ");
+         $j("#user_permanent_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
       }
 
    });
 
-    $("#user_permanent_address_state").focusout(function() {
-      var permanent_address_state = $("#user_permanent_address_state").val();
+    $j("#user_permanent_address_state").focusout(function() {
+      var permanent_address_state = $j("#user_permanent_address_state").val();
       if(!ck_english.test(permanent_address_state)) {
-       $("#error_permanent_address_state").css('color','red');
-       $("#error_permanent_address_state").text(" Enter valid state name");
-       $("#user_permanent_address_state").css('border-color', 'red');
+       $j("#error_permanent_address_state").css('color','red');
+       $j("#error_permanent_address_state").text(" Enter valid state name");
+       $j("#user_permanent_address_state").css('border-color', 'red');
       }
 
       if(ck_english.test(permanent_address_state)) {
-       $("#error_permanent_address_state").text(" ");
-       $("#user_permanent_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       $j("#error_permanent_address_state").text(" ");
+       $j("#user_permanent_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
       }
     });
 
-   $("#user_permanent_address_pin_code").focusout(function() {
-      var permanent_address_pincode = $("#user_permanent_address_pin_code").val();
+   $j("#user_permanent_address_pin_code").focusout(function() {
+      var permanent_address_pincode = $j("#user_permanent_address_pin_code").val();
       if(!ck_pincode.test(permanent_address_pincode)) {
-       $("#error_permanent_address_pincode").css('color','red');
-       $("#error_permanent_address_pincode").text(" Enter valid pincode");
-       $("#user_permanent_address_pin_code").css('border-color', 'red');
+       $j("#error_permanent_address_pincode").css('color','red');
+       $j("#error_permanent_address_pincode").text(" Enter valid pincode");
+       $j("#user_permanent_address_pin_code").css('border-color', 'red');
       }
 
       if(ck_pincode.test(permanent_address_pincode)) {
-       $("#error_permanent_address_pincode").text(" ");
-       $("#user_permanent_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+       $j("#error_permanent_address_pincode").text(" ");
+       $j("#user_permanent_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
       }
 
-      $("#user_permanent_address").val($('#user_permanent_address_city').val() + "," + $("#user_permanent_address_state").val() + "-" + $("#user_permanent_address_pin_code").val());
+      $j("#user_permanent_address").val($j('#user_permanent_address_city').val() + "," + $j("#user_permanent_address_state").val() + "-" + $j("#user_permanent_address_pin_code").val());
+    });
+
+    $j("#user_password").focusout(function() {
+      var password_val = $j("#user_password").val();
+      if(password_val == "" ) {
+        $j("#user_password").css('border-color', 'red');
+        $j("#error_user_password").text("Password can't be empty");
+        $j("#error_user_password").css("color", 'red');
+      } else {
+        $j("#user_password").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $j("#error_user_password").css("color", "rgba(82, 168, 236, 0.8)");
+        $j("#error_user_password").text(" ");
+      }
+      });
+
+
+    $j("#user_password_confirmation").focusout(function() {
+      var confirm_pass_val = $j("#user_password_confirmation").val();
+      if(confirm_pass_val != $j("#user_password").val()) {
+        $j("#user_password_confirmation").css('border-color', 'red');
+        $j("#error_user_password_confirmation").text("These passwords do not match.Please try again");
+        $j("#error_user_password_confirmation").css("color", 'red');
+      } else {
+        $j("#user_password_confirmation").css('border-color', 'rgba(82, 168, 236, 0.8)');
+        $j("#error_user_password_confirmation").css("color", "rgba(82, 168, 236, 0.8)");
+        $j("#error_user_password_confirmation").text(" ");
+      }
     });
 
 
-
-
-
-  function myFunction()
-  {
-    alert("I am an alert box!");
-  }
-
-
-
-
-
-$('#new_user').submit(function() {
+$j('#new_user').submit(function() {
     if(ck_previous_click == false) {
       var errors = "";
-      var phone_number = $('#user_phone_number').val();
-      var emergency_phone_number = $('#user_emergency_phone_number').val();
-      var emergency_contact_person = $('#user_emergency_contact_person').val();
-      var alternate_phone_number = $('#user_alternate_phone_number').val();
-      var official_email_id = $('#user_official_email_id').val();
-      var alternate_email_id = $('#user_alternate_email_id').val();
-      var local_address_city = $("#user_local_address_city").val();
-      var local_address_state = $('#user_local_address_state').val();
-      var local_address_pincode = $("#user_local_address_pin_code").val();
-      var permanent_address_city = $("#user_permanent_address_city").val();
-      var permanent_address_state = $("#user_permanent_address_state").val();
-      var permanent_address_pincode = $("#user_permanent_address_pin_code").val();
+      var phone_number = $j('#user_phone_number').val();
+      var emergency_phone_number = $j('#user_emergency_phone_number').val();
+      var emergency_contact_person = $j('#user_emergency_contact_person').val();
+      var alternate_phone_number = $j('#user_alternate_phone_number').val();
+      var official_email_id = $j('#user_official_email_id').val();
+      var alternate_email_id = $j('#user_alternate_email_id').val();
+      var local_address_city = $j("#user_local_address_city").val();
+      var local_address_state = $j('#user_local_address_state').val();
+      var local_address_pincode = $j("#user_local_address_pin_code").val();
+      var permanent_address_city = $j("#user_permanent_address_city").val();
+      var permanent_address_state = $j("#user_permanent_address_state").val();
+      var permanent_address_pincode = $j("#user_permanent_address_pin_code").val();
 
       if(!ck_english.test(local_address_city)) {
          errors += "error6";
-         $("#error_local_address_city").css('color','red');
-         $("#error_local_address_city").text(" Enter valid city name");
-         $("#user_local_address_city").css('border-color', 'red');
+         $j("#error_local_address_city").css('color','red');
+         $j("#error_local_address_city").text(" Enter valid city name");
+         $j("#user_local_address_city").css('border-color', 'red');
        }
        if(ck_english.test(local_address_city)) {
-         $("#error_local_address_city").text(" ");
-         $("#user_local_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_local_address_city").text(" ");
+         $j("#user_local_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
        if(!ck_english.test(local_address_state)) {
          errors += "error7";
-         $("#error_local_address_state").css('color','red');
-         $("#error_local_address_state").text(" Enter valid state name");
-         $("#user_local_address_state").css('border-color', 'red');
+         $j("#error_local_address_state").css('color','red');
+         $j("#error_local_address_state").text(" Enter valid state name");
+         $j("#user_local_address_state").css('border-color', 'red');
        }
        if(ck_english.test(local_address_state)) {
-         $("#error_local_address_state").text(" ");
-         $("#user_local_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_local_address_state").text(" ");
+         $j("#user_local_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
        if(!ck_pincode.test(local_address_pincode)) {
          errors += "error8";
-         $("#error_local_address_pincode").css('color','red');
-         $("#error_local_address_pincode").text(" Enter valid pincode");
-         $("#user_local_address_pin_code").css('border-color', 'red');
+         $j("#error_local_address_pincode").css('color','red');
+         $j("#error_local_address_pincode").text(" Enter valid pincode");
+         $j("#user_local_address_pin_code").css('border-color', 'red');
        }
        if(ck_pincode.test(local_address_pincode)) {
-         $("#error_local_address_pincode").text(" ");
-         $("#user_local_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_local_address_pincode").text(" ");
+         $j("#user_local_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
        if(!ck_english.test(permanent_address_city)) {
          errors += "error9";
-         $("#error_permanent_address_city").css('color','red');
-         $("#error_permanent_address_city").text(" Enter valid city name");
-         $("#user_permanent_address_city").css('border-color', 'red');
+         $j("#error_permanent_address_city").css('color','red');
+         $j("#error_permanent_address_city").text(" Enter valid city name");
+         $j("#user_permanent_address_city").css('border-color', 'red');
        }
        if(ck_english.test(permanent_address_city)) {
-         $("#error_permanent_address_city").text(" ");
-         $("#user_permanent_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_permanent_address_city").text(" ");
+         $j("#user_permanent_address_city").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
        if(!ck_english.test(permanent_address_state)) {
          errors += "error10";
-         $("#error_permanent_address_state").css('color','red');
-         $("#error_permanent_address_state").text(" Enter valid state name");
-         $("#user_permanent_address_state").css('border-color', 'red');
+         $j("#error_permanent_address_state").css('color','red');
+         $j("#error_permanent_address_state").text(" Enter valid state name");
+         $j("#user_permanent_address_state").css('border-color', 'red');
        }
        if(ck_english.test(permanent_address_state)) {
-         $("#error_permanent_address_state").text(" ");
-         $("#user_permanent_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_permanent_address_state").text(" ");
+         $j("#user_permanent_address_state").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
        if(!ck_pincode.test(permanent_address_pincode)) {
          errors += "error11";
-         $("#error_permanent_address_pincode").css('color','red');
-         $("#error_permanent_address_pincode").text(" Enter valid pincode");
-         $("#user_permanent_address_pin_code").css('border-color', 'red');
+         $j("#error_permanent_address_pincode").css('color','red');
+         $j("#error_permanent_address_pincode").text(" Enter valid pincode");
+         $j("#user_permanent_address_pin_code").css('border-color', 'red');
        }
        if(ck_pincode.test(permanent_address_pincode)) {
-         $("#error_permanent_address_pincode").text(" ");
-         $("#user_permanent_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
+         $j("#error_permanent_address_pincode").text(" ");
+         $j("#user_permanent_address_pin_code").css('border-color', 'rgba(82, 168, 236, 0.8)');
        }
 
        alert("In new user submit");
@@ -291,12 +308,12 @@ $('#new_user').submit(function() {
     }
 });
 
-  $('#bttn_submit').click(function() {
+  $j('#bttn_submit').click(function() {
       alert("In submit click");
-       $('#new_user').submit();
+       $j('#new_user').submit();
    });
 
-    $('#bttn_previous').click(function() {
+    $j('#bttn_previous').click(function() {
        ck_previous_click = true;
     });
 </script>

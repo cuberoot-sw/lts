@@ -1,6 +1,6 @@
 class Leave < ActiveRecord::Base
   attr_accessible  :user_id, :start_date, :end_date, :no_of_days,
-    :current_status, :reason, :approved_on, :rejection_reason, :approved_by
+    :current_status, :reason, :approved_on, :rejection_reason, :approved_by, :leave_type
   # Leave belongs to user and user has many leaves
   belongs_to :user
   delegate :email, to: :user, prefix: true

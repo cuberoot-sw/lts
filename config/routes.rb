@@ -3,6 +3,7 @@ CuberootLts::Application.routes.draw do
   get "holidays/index"
 
   match "/leaves/set_year" => "leaves", :action => "set_year"
+  match "/users/find_user_emails" => "users", :action => "find_user_emails"
 
   devise_for :users, controllers: {sessions: "sessions",
                                    registrations: "registrations"}
@@ -22,21 +23,14 @@ CuberootLts::Application.routes.draw do
     end
   end
 
-  resources :users, only: [:show, :edit, :update, :destroy, :index] do
+  resources :users, only: [:show, :edit, :update, :destroy, :index, :find_user_emails] do
     member do
       get 'user_management'
     end
-#     collection do
-#     get 'first_step'
-#    end
-
+    member do
+      get 'find_user_emails'
+    end
   end
-
-#  resources :registrations do
-#    member do
-#      get 'first_step'
-#    end
-#  end
 
   resources :registrations, only: [:create] do
     collection do
@@ -53,7 +47,6 @@ CuberootLts::Application.routes.draw do
   resources :setups
 
   resources :holidays, only: [:show, :new, :create, :update, :destroy, :index, :edit]
-
 
 root to: "home#index"
 

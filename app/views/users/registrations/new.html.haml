@@ -1,0 +1,9 @@
+%h2 Sign up
+= form_for @user do |f|
+  = devise_error_messages!
+  = render 'second_step', f: f
+  %div
+    = link_to "First_Step"
+  %div
+    %p= f.submit "Submit"
+= render "devise/shared/links"

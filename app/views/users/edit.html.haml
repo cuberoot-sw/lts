@@ -10,7 +10,7 @@
   .field
     = f.label :manager_id
     %br/
-    = f.select("manager_id", User.managers.collect {|p| [p.email, p.id] })
+    = f.select("manager_id", options_for_select(!@valid_managers_email.blank? ? @valid_managers_email : ""))
   %br/
   .field
     = f.radio_button :role, 'employee'
@@ -25,5 +25,3 @@
   %br/
 %br/
 = link_to 'Back', user_management_user_path(current_user.id)
-
-

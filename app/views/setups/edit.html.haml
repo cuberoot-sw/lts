@@ -6,12 +6,10 @@
     = f.label :Total_leaves
     %br/
     = f.text_field :total_leaves
-  .field
+  %div
     = f.label :Year
     %br/
     = f.text_field :year
-  .actions
-    = f.submit, class: "update_setup"
+  %div
+    = f.submit
 = link_to 'Back', setups_path
-
-

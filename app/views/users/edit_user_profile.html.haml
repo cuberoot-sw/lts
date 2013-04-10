@@ -1,0 +1,47 @@
+%h2 Edit Profile
+= form_for @user, url: user_path do |f|
+  %div
+    = f.label :email, "Email"
+    = f.text_field :email, readonly: true
+  %div
+    %label Manager
+    %input{:name => "fname", :type => "text", :value => "#{!@manager.blank? ? @manager.email : "No Manager Assigned" }", readonly: true }
+  %div
+    = f.label :email, "Email"
+    = f.text_field :email, readonly: true
+  %div
+    = f.label :phone_number
+    = f.text_field :phone_number
+  %div
+    = f.label :emergency_phone_number
+    = f.text_field :emergency_phone_number
+  %div
+    = f.label :emergency_contact_person
+    = f.text_field :emergency_contact_person
+  %div
+    = f.label :alternate_phone_number
+    = f.text_field :alternate_phone_number
+  %div
+    = f.label :official_email_id
+    = f.text_field :official_email_id
+  %div
+    = f.label :alternate_email_id
+    = f.text_field :alternate_email_id
+  %div
+    = f.label :date_of_birth,"Date of Birth"
+    = f.text_field :date_of_birth
+  %div= f.label :blood_group
+  = f.select :blood_group, options_for_post_bloodgroup
+  %div
+    = f.label :local_address,"Local Address :"
+    = f.text_field :local_address
+  %div
+    = f.label :permanent_address
+    = f.text_field :permanent_address
+  .action
+    = f.submit "Save"
+
+:javascript
+  $j = jQuery.noConflict();
+  $j("#user_date_of_birth").datepicker({maxDate: "0M",dateFormat: "yy-mm-dd"});
+

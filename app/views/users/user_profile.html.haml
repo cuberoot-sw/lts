@@ -1,0 +1,6 @@
+%h2 User Profile
+= link_to "Edit Profile", user_profile_user_path(@user.id, commit: "edit_profile")
+.field
+  %h3 Email
+.field
+  = @user.email

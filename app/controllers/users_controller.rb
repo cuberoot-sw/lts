@@ -69,4 +69,17 @@ class UsersController < ApplicationController
       @response = "User found"
     end
   end
+
+  def user_profile
+    @user = User.find_by_id(current_user.id)
+    if params[:commit] == "edit_profile"
+      respond_to do |format|
+        format.html { render "edit_user_profile", object: @user }
+      end
+    end
+  end
+
+  def edit_user_profile
+
+  end
 end

@@ -23,12 +23,18 @@ CuberootLts::Application.routes.draw do
     end
   end
 
-  resources :users, only: [:show, :edit, :update, :destroy, :index, :find_user_emails] do
+  resources :users, only: [:show, :edit, :update, :destroy, :index, :find_user_emails, :user_profile, :edit_user_profile] do
     member do
       get 'user_management'
     end
     member do
       get 'find_user_emails'
+    end
+    member do 
+      get 'user_profile'
+    end
+    collection do 
+      post 'edit_user_profile'
     end
   end
 

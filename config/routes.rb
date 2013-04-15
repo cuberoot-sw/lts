@@ -4,6 +4,7 @@ CuberootLts::Application.routes.draw do
 
   match "/leaves/set_year" => "leaves", :action => "set_year"
   match "/users/find_user_emails" => "users", :action => "find_user_emails"
+  match "/users/edit_profile" => "users", :action => "edit_profile" 
 
   devise_for :users, controllers: {sessions: "sessions",
                                    registrations: "registrations"}
@@ -23,7 +24,7 @@ CuberootLts::Application.routes.draw do
     end
   end
 
-  resources :users, only: [:show, :edit, :update, :destroy, :index, :find_user_emails, :user_profile, :edit_user_profile] do
+  resources :users, only: [:show, :edit, :update, :destroy, :index, :find_user_emails, :user_profile, :edit_profile] do
     member do
       get 'user_management'
     end
@@ -34,7 +35,7 @@ CuberootLts::Application.routes.draw do
       get 'user_profile'
     end
     collection do 
-      post 'edit_user_profile'
+     post 'edit_profile'
     end
   end
 

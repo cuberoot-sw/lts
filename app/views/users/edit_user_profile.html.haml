@@ -1,5 +1,5 @@
 %h2 Edit Profile
-= form_for @user, url: user_path do |f|
+= form_for @user, url: edit_profile_users_path do |f|
   %div
     = f.label :email, "Email"
     = f.text_field :email, readonly: true

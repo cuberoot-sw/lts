@@ -1,6 +1,46 @@
 %h2 User Profile
 = link_to "Edit Profile", user_profile_user_path(@user.id, commit: "edit_profile")
 .field
-  %h3 Email
+  %h4 Manager
+.field
+  = !@manager.blank? ? @manager.email : "No Manager Assigned"
+.field
+  %h4 Email
 .field
   = @user.email
+.field
+  %h4 Phone Number
+.field
+  = @user.phone_number
+.field
+  %h4 Emergency Phone Number
+.field
+  = @user.emergency_phone_number
+.field
+  %h4 Emergency Contact Person
+.field
+  = @user.emergency_contact_person
+.field
+  %h4 Alternate Phone Number
+.field
+  = @user.alternate_phone_number
+.field
+  %h4 Official Email
+.field
+  = @user.official_email_id
+.field
+  %h4 Alternate Email
+.field
+  = @user.alternate_email_id
+.field
+  %h4 Date Of Birth
+.field
+  = @user.date_of_birth
+.field
+  %h4 Local Address
+.field
+  = @user.local_address
+.field
+  %h4 Permanent Address
+.field
+  = @user.permanent_address

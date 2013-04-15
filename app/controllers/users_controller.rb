@@ -71,6 +71,7 @@ class UsersController < ApplicationController
   end
 
   def user_profile
+    @manager = User.find_by_id(current_user.manager_id)
     @user = User.find_by_id(current_user.id)
     if params[:commit] == "edit_profile"
       respond_to do |format|
@@ -79,7 +80,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit_user_profile
-
+  def edit_profile
+    debugger
+    @user = User.find_by_id(current_user.id)
+    @user.update_attributes(params[:user])
+      redirect_to user_profile_user_path(current_user.id)
   end
 end

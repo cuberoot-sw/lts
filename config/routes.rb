@@ -5,9 +5,13 @@ CuberootLts::Application.routes.draw do
   match "/leaves/set_year" => "leaves", :action => "set_year"
   match "/users/find_user_emails" => "users", :action => "find_user_emails"
   match "/users/edit_profile" => "users", :action => "edit_profile" 
+  match "/users/change_password" => "users", :action => "change_password"
+  match "/users/password_reset" => "users", :action => "password_reset"
 
   devise_for :users, controllers: {sessions: "sessions",
-                                   registrations: "registrations"}
+                                   registrations: "registrations"} do
+    get "/users/sign_out" => "devise/sessions#destroy", :as => :destroy_user_session
+  end
   devise_scope :user do
     match "/registrations/second_step" => "registrations",
       action: "second_step"
@@ -24,18 +28,24 @@ CuberootLts::Application.routes.draw do
     end
   end
 
-  resources :users, only: [:show, :edit, :update, :destroy, :index, :find_user_emails, :user_profile, :edit_profile] do
+  resources :users, only: [:show, :edit, :update, :destroy, :index, :find_user_emails, :user_profile, :edit_profile, :change_password, :password_reset] do
     member do
       get 'user_management'
     end
     member do
       get 'find_user_emails'
     end
-    member do 
+    member do
       get 'user_profile'
     end
-    collection do 
+    collection do
      post 'edit_profile'
+    end
+    member do
+     get 'change_password'
+    end
+    collection do
+     post 'password_reset'
     end
   end
 

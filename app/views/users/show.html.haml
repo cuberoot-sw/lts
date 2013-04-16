@@ -1,6 +1,6 @@
 %p
   %b Manager
-  = @user.manager_email
+  = !@user.manager_id.blank? ? @user.manager_email : "No Manager Assigned"
 %p
   %b Joining Date
   = @user.joining_date

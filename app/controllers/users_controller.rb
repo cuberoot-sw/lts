@@ -27,7 +27,7 @@ class UsersController < ApplicationController
       @user.joining_date = params[:joining_date]
       @user.role = params[:role]
     end
-
+    debugger
     if @user.update_attributes(params[:user])
       redirect_to @user, notice: 'Employees info has changed'
     else
@@ -75,15 +75,29 @@ class UsersController < ApplicationController
     @user = User.find_by_id(current_user.id)
     if params[:commit] == "edit_profile"
       respond_to do |format|
-        format.html { render "edit_user_profile", object: @user }
+        format.html {render "edit_user_profile", object: @user}
       end
     end
   end
 
   def edit_profile
-    debugger
     @user = User.find_by_id(current_user.id)
     @user.update_attributes(params[:user])
       redirect_to user_profile_user_path(current_user.id)
+  end
+
+  def change_password
+    debugger
+    @user = User.find_by_id(current_user.id)
+    respond_to do |format|
+      format.html {render "change_password", object: @user}
+    end
+  end
+
+  def password_reset
+    @user = User.find_by_id(current_user.id)
+    @user.update_attributes(params[:user])
+    flash[:notice] = 'Password successfully changed.Please Sign in Again'
+    redirect_to destroy_user_session_path, method: :delete
   end
 end

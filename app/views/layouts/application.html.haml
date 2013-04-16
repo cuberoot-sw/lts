@@ -2,7 +2,7 @@
   %head
     %title CuberootLts
     = stylesheet_link_tag    "bootstrap.min", "lts","jquery-ui-1.8.23.custom", media: "all"
-    = javascript_include_tag "application","jquery-1.7.2.min","jquery-ui-1.8.23.custom.min"
+    = javascript_include_tag "application","jquery-1.7.2.min","jquery-ui-1.8.23.custom.min", "bootstrap"
     = csrf_meta_tags
   %h1 Cube Root Lts.
   %hr/
@@ -17,15 +17,26 @@
           - if user_signed_in?
             - if current_user.role == 'admin'
               %a.brand{:href => "http://localhost:3000/users/#{current_user.id}/user_management"} Cube Root LTS
+              = link_to "Profile", user_profile_user_path(current_user.id)
             - elsif current_user.role == 'employee' or current_user.role == 'manager'
               %a.brand{:href => "http://localhost:3000/leaves"} Cube Root LTS
+              = link_to "Profile", user_profile_user_path(current_user.id)
           - else
             %a.brand{:href => ""} Cube Root LTS
           .nav-collapse
             #user_nav.pull-right{:style => "font-size:17px"}
               - if user_signed_in?
-                Signed in as #{current_user.email}. Not you?
-                \#{link_to "Sign out", destroy_user_session_path, method: :delete}
+                Signed in as #{current_user.email}
+                .btn-group
+                  %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                    Settings
+                    %span.caret
+                  %ul.dropdown-menu
+                    %li
+                      \#{link_to "Change Password", change_password_user_path(current_user.id)}
+                    %li.divider
+                    %li 
+                      \#{link_to "Sign out", destroy_user_session_path, method: :delete}
                 - if current_user.role == 'manager' or current_user.role == 'employee'
                   = label_tag 'Year'
                   = session[:current_year]

@@ -62,7 +62,9 @@ module CuberootLts
 
     # Enable the asset pipeline
     config.assets.enabled = true
-
+    config.assets.paths << "#{Rails.root}/app/assets/fonts/foundation-icons-general/stylesheets/"
+    config.assets.paths << "#{Rails.root}/app/assets/fonts/foundation-icons-social/stylesheets/"
+    config.assets.paths << "#{Rails.root}/app/assets/camera/css/"
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end

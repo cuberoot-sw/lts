@@ -10,7 +10,11 @@
  *
  *= require_self
  *= require bootstrap.min
- *= require_tree .
+ *= require bootstrap-responsive.min
+ *= require foundation-icons-general
+ *= require foundation-icons-social
+ *= require camera
+ *= require custom
 */
 
 

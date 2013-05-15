@@ -1,9 +1,10 @@
 = content_for :sidebar do
+  %h3.sidebox-title Summary
   = render '/setups/leave_balance'
 %h2 Employee's DashBoard:-
 %table.table.table-bordered
   %caption
-    Pending Leaves of #{current_user.email}
+    %h3 Pending Leaves of #{current_user.email}
   %tr
     %th Applied On
     %th No of Days

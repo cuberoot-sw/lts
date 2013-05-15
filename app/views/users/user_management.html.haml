@@ -13,6 +13,6 @@
       %td= user_manager_email(user)
       %td= link_to 'Edit', edit_user_path(user.id)
       %td= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete
-= link_to "Setup for Leaves", setups_path
+= link_to "Setup for Leaves", setups_path, :class => "btn"
 %br/
-= link_to "Manage Holiday List", holidays_index_path
+= link_to "Manage Holiday List", holidays_index_path, :class => "btn"

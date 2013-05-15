@@ -60,12 +60,11 @@ class UsersController < ApplicationController
   end
 
   def find_user_emails
-    @response
     @user = User.find_by_email(params[:email])
     if @user.blank? || @user.nil?
-      @response = "User not found"
+      @response = "0"
     else
-      @response = "User found"
+      @response = "1"
     end
   end
 

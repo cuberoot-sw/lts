@@ -64,7 +64,7 @@
                                 method: 'get',
                                 parameters: { "email": user_email_val },
                                 onSuccess: function(res){
-                                 if(res.responseText != "User not found\n\n") {
+                                 if(res.responseText.match(/1/)) {
                                    $j("#user_email").css('border-color','red');
                                    $j("#error_email").css('color','red');
                                    $j("#error_email").text('Email already in use.Please select some other email');
